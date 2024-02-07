@@ -1,8 +1,11 @@
 import React from 'react'
+import RouterConfig from './config/Routing/router/RouterConfig'
 
 const App = () => {
   return (
-    <div>hello</div>
+    <>
+    <RouterConfig />
+    </>
 
   )
 }
