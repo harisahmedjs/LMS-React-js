@@ -3,6 +3,7 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
+    onAuthStateChanged
   } from "firebase/auth";
   import app from "./firebaseconfig.js";
   import {
@@ -15,7 +16,10 @@ import {
     deleteDoc,
     doc,
     updateDoc,
+
   } from "firebase/firestore";
+
+ 
   
   const auth = getAuth(app);
   
@@ -24,19 +28,20 @@ import {
   
   // register user
   
-  let signUpUser = (obj) => {
+  let signUpUser = (formData) => {
     return new Promise((resolve, reject) => {
-      createUserWithEmailAndPassword(auth, obj.email, obj.password)
+      createUserWithEmailAndPassword(auth, formData.email, formData.password)
         .then(async (res) => {
-          resolve((obj.uid = res.user.uid));
-          delete obj.password;
+          resolve((formData.uid = res.user.uid));
+          delete formData.password;
           const dbObj = {
-            ...obj,
+            ...formData,
             uid: res.user.uid
           }
-          await addDoc(collection(db, "users"), dbObj)
+          await addDoc(collection(db, "students"), dbObj)
             .then((res) => {
               console.log("user added to database successfully");
+              // navigate('/student')
             })
             .catch((err) => {
               console.log(err);
@@ -96,21 +101,38 @@ import {
   };
   
   //get data with id from firestore
-  const getData = (colName) => {
+  const getData = (colName, userId) => {
     return new Promise(async (resolve, reject) => {
-      const dataArr = []
-      const q = query(
-        collection(db, colName),
-        where("id", "==", auth.currentUser.uid)
-      );
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        dataArr.push(doc.data())
+      try {
+        const dataArr = [];
+        const q = query(collection(db, colName), where("uid", "==", userId));
+        const querySnapshot = await getDocs(q);
+  
+        querySnapshot.forEach((doc) => {
+          dataArr.push(doc.data());
+        });
         resolve(dataArr);
-      });
-      reject("error occured");
+      } catch (error) {
+      
+        reject(error.message);
+      }
     });
   };
+  // const getData = (colName,userId) => {
+  //   return new Promise(async (resolve, reject) => {
+  //     const dataArr = []
+  //     const q = query(
+  //       collection(db, colName),
+  //       where("uid", "==", userId)
+  //     );
+  //     const querySnapshot = await getDocs(q);
+  //     querySnapshot.forEach((doc) => {
+  //       dataArr.push(doc.data())
+  //       resolve(dataArr);
+  //     });
+  //     reject("error occured");
+  //   });
+  // };
   
   //get all data
   const getAllData = (colName) => {
@@ -141,6 +163,7 @@ import {
       const update = doc(db, name, id);
       updateDoc(update, obj)
       resolve("document updated")
+      
       reject("error occured")
     })
   }

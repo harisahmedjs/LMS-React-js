@@ -10,9 +10,11 @@ import {
   InputLabel,
   Select,
 } from '@mui/material';
-import { signUpUser } from '../../config/firebase/firebasemethods';
+import { signUpUser} from '../../config/firebase/firebasemethods';
+import { useNavigate } from 'react-router-dom';
 
 const Admission = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -22,6 +24,7 @@ const Admission = () => {
     course: '',
     days: '', // Changed from 'formData.course'
     image: null,
+    
   });
 
   const handleChange = (e) => {
@@ -41,10 +44,10 @@ const Admission = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    // You can add form submission logic here
-    signUpUser({
-      email : formData.email,
-      password : formData.password,
+  
+    signUpUser({...formData , type: 'student'})
+    .then((res)=>{
+      navigate('/student')
     })
     
     console.log(formData);
@@ -158,7 +161,7 @@ const Admission = () => {
             )}
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" color="primary" type="submit">
+            <Button variant="contained" color="primary" type="submit" >
               Submit
             </Button>
           </Grid>
