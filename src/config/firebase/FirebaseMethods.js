@@ -1,25 +1,27 @@
 import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut,
-    onAuthStateChanged
-  } from "firebase/auth";
-  import app from "./firebaseconfig.js";
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    getDocs,
-    query,
-    where,
-    deleteDoc,
-    doc,
-    updateDoc,
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "firebase/auth";
+import app from "./firebaseconfig.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { lazy } from "react";
 
-  } from "firebase/firestore";
 
- 
+  const storage = getStorage(app);
   
   const auth = getAuth(app);
   
@@ -53,6 +55,52 @@ import {
     });
   };
   
+  // let signUpUser = (formData) => {
+  //   return new Promise((resolve, reject) => {
+  //     createUserWithEmailAndPassword(auth, formData.email, formData.password)
+  //       .then(async (res) => {
+  //         console.log("User created successfully. UID:", res.user.uid);
+  
+  //         // Assign UID to formData
+  //         formData.uid = res.user.uid;
+  //         console.log("formData with UID:", formData);
+  
+  //         // Delete password from formData
+  //         delete formData.password;
+  
+  //         // Handle the image separately and get the download URL
+  //         const imageUrl = await addImageToStorage(formData.image, formData.email);
+  //         console.log("Image URL:", imageUrl);
+  
+  //         // Update formData with the image URL
+  //         formData.imageUrl = imageUrl;
+  
+  //         const dbObj = {
+  //           ...formData,
+  //           // Make sure UID is still present in dbObj
+  //           uid: res.user.uid
+  //         };
+  
+  //         // Add user data to Firestore
+  //         await addDoc(collection(db, "students"), dbObj)
+  //           .then(() => {
+  //             console.log("User added to database successfully");
+  //             resolve("User added to database successfully");
+  //           })
+  //           .catch((err) => {
+  //             console.error("Error adding user to Firestore:", err);
+  //             reject(err.message);
+  //           });
+  //       })
+  //       .catch((err) => {
+  //         console.error("Error creating user:", err);
+  //         reject(err.message);
+  //       });
+  //   });
+  // };
+  
+  
+
   // login user
   let loginUser = (obj) => {
     return new Promise((resolve, reject) => {
@@ -169,17 +217,20 @@ import {
   }
 
   // const files = profile.files[0]
-  const addImageToStorage = (files , email)=>{
-    return new Promise((resolve , reject)=>{
-      const storageRef = ref(storage, email.value);
-      uploadBytes(storageRef, files).then(() => {
-          getDownloadURL(storageRef).then((url) => {
-              console.log(url);
-              resolve(url);
-              reject('Error found');
-          });
-      });
-    })
-  }
+  const addImageToStorage = (file, email) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const storageRef = ref(storage, file.name); 
+        await uploadBytes(storageRef, file);
   
-  export { auth, db, signUpUser, loginUser, signOutUser, sendData, getData, getAllData, deleteDocument, updateDocument, addImageToStorage };
+        const imageUrl = await getDownloadURL(storageRef);
+        
+  
+        resolve(imageUrl);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        reject(error);
+      }
+    });
+  };
+  export { auth, db,storage, signUpUser, loginUser, signOutUser, sendData, getData, getAllData, deleteDocument, updateDocument, addImageToStorage };

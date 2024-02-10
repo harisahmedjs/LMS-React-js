@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import {
   Container,
   TextField,
@@ -10,7 +10,7 @@ import {
   InputLabel,
   Select,
 } from '@mui/material';
-import { signUpUser} from '../../config/firebase/firebasemethods';
+import { signUpUser , addImageToStorage} from '../../config/firebase/firebasemethods';
 import { useNavigate } from 'react-router-dom';
 
 const Admission = () => {
@@ -23,8 +23,6 @@ const Admission = () => {
     address: '',
     course: '',
     days: '', // Changed from 'formData.course'
-    image: null,
-    
   });
 
   const handleChange = (e) => {
@@ -34,13 +32,14 @@ const Admission = () => {
       [name]: value,
     }));
   };
-
-  const handleImageChange = (e) => {
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
     setFormData((prevFormData) => ({
       ...prevFormData,
-      image: URL.createObjectURL(e.target.files[0]),
+      image: file,
     }));
   };
+  
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -52,6 +51,30 @@ const Admission = () => {
     
     console.log(formData);
   };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  
+  //   try {
+  //     const imageUrl = await addImageToStorage(formData.image, formData.email);
+  //     console.log("Image URL:", imageUrl);
+  
+  //     // Include the image URL in the formData before signing up the user
+  //     const updatedFormData = {
+  //       ...formData,
+  //       type: 'student',
+  //       imageUrl: imageUrl,  // Add this line
+  //     };
+  
+  //     signUpUser(updatedFormData)
+  //       async.then((res) => {
+  //         navigate('/student');
+  //       });
+  //   } catch (error) {
+  //     console.error("Error uploading image:", error);
+  //   }
+  // };
+  
+
 
   const consollingvalue = (e) =>{
     e.preventDefault();
@@ -149,17 +172,8 @@ const Admission = () => {
             </FormControl>
           </Grid>
           <Grid item xs={12}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            {formData.image && (
-              <img src={formData.image} alt="Selected" style={{ maxWidth: '100%' }} />
-            )}
-          </Grid>
+          <input type="file" onChange={handleFileChange} />
+            </Grid>
           <Grid item xs={12}>
             <Button variant="contained" color="primary" type="submit" >
               Submit
