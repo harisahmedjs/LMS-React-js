@@ -9,6 +9,7 @@ import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 
 export default function MenuAppBar({ data }) {
+  
   const [openModal, setOpenModal] = React.useState(false);
 
   const handleOpenModal = () => {
@@ -41,12 +42,12 @@ export default function MenuAppBar({ data }) {
           </Typography>
 
           {/* Logout Image (on the right) */}
-          <img
-            src={data.image}
-            alt="Logout"
+          <img 
+            src={data.imageUrl}
+            alt="Logout" 
             style={{ height: 40, marginLeft: 2, cursor: 'pointer' }}
-            onClick={handleOpenModal}
-          />
+            onClick={handleOpenModal} 
+            />
 
           {/* Logout Modal */}
           <Dialog open={openModal} onClose={handleCloseModal}>

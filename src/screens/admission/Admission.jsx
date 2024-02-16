@@ -9,6 +9,7 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Box,
 } from '@mui/material';
 import { signUpUser , addImageToStorage} from '../../config/firebase/firebasemethods';
 import { useNavigate } from 'react-router-dom';
@@ -40,11 +41,24 @@ const Admission = () => {
     }));
   };
   
+  
+  const handleImage = async () => {
+    try {
+      const imageUrl = await addImageToStorage(formData.image, formData.email);
+      console.log("Image URL:", imageUrl);
+      // Include the image URL in the formData
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        image: imageUrl,
+      }));
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-  
-    signUpUser({...formData , type: 'student'})
+    signUpUser({...formData , type: 'student' , imageUrl: formData.image })
     .then((res)=>{
       navigate('/student')
     })
@@ -171,9 +185,15 @@ const Admission = () => {
               </Select>
             </FormControl>
           </Grid>
+          
           <Grid item xs={12}>
           <input type="file" onChange={handleFileChange} />
             </Grid>
+            <Grid item xs={12}>
+            <Button variant="contained" color="primary" onClick={handleImage} > Upload Image
+            </Button>
+            </Grid>
+            
           <Grid item xs={12}>
             <Button variant="contained" color="primary" type="submit" >
               Submit

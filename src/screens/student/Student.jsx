@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import MenuAppBar from '../../components/Navbar';
 import { getData, auth } from '../../config/firebase/firebasemethods';
 import { onAuthStateChanged } from 'firebase/auth';
+// import UserProfileCard from '../../components/card';
 
 const Student = () => {
   const [arr, setArr] = useState([]);
@@ -19,18 +20,25 @@ const Student = () => {
     });
   }, []);
 
+  console.log(arr)
   return (
     <>
-     
-      {console.log(arr)}
+     <MenuAppBar data={arr} />
 
+{/* {arr.map((item,index)=>{
+  <div>
+    <h1 key={index}>Name :- {item.fullName}</h1>
+  </div>
+})} */}
+{arr.map((item,index)=>
+( <div>
+  <h3> {item.fullName}</h3>
+  <h4>{item.course}</h4>
+  {/* <img src= alt="" /> */}
+  </div>
+
+    ))}
     
-      {arr.map((item, index) => (
-        <h1 key={index}>{item.image}</h1>
-      ))}
-
-      
-      <MenuAppBar data={arr} />
     </>
   );
 };
