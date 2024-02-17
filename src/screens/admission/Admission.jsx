@@ -13,6 +13,8 @@ import {
 } from '@mui/material';
 import { signUpUser , addImageToStorage} from '../../config/firebase/firebasemethods';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
 
 const Admission = () => {
   const navigate = useNavigate()
@@ -51,6 +53,7 @@ const Admission = () => {
         ...prevFormData,
         image: imageUrl,
       }));
+      Swal.fire("image uploaded successfully");
     } catch (error) {
       console.error("Error uploading image:", error);
     }
@@ -60,7 +63,9 @@ const Admission = () => {
     e.preventDefault();
     signUpUser({...formData , type: 'student' , imageUrl: formData.image })
     .then((res)=>{
-      navigate('/student')
+      if(res){
+          navigate('/student')
+      }
     })
     
     console.log(formData);

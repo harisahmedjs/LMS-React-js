@@ -1,0 +1,28 @@
+.frame-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .frame-img {
+    width: 20%;
+    height: auto;
+  }
+  
+  .frame-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .frame-name {
+    margin-bottom: 10px;
+  }
+  
+  .frame-course {
+    font-weight: bold;
+  }
+  

@@ -55,49 +55,6 @@ import { lazy } from "react";
     });
   };
   
-  // let signUpUser = (formData) => {
-  //   return new Promise((resolve, reject) => {
-  //     createUserWithEmailAndPassword(auth, formData.email, formData.password)
-  //       .then(async (res) => {
-  //         console.log("User created successfully. UID:", res.user.uid);
-  
-  //         // Assign UID to formData
-  //         formData.uid = res.user.uid;
-  //         console.log("formData with UID:", formData);
-  
-  //         // Delete password from formData
-  //         delete formData.password;
-  
-  //         // Handle the image separately and get the download URL
-  //         const imageUrl = await addImageToStorage(formData.image, formData.email);
-  //         console.log("Image URL:", imageUrl);
-  
-  //         // Update formData with the image URL
-  //         formData.imageUrl = imageUrl;
-  
-  //         const dbObj = {
-  //           ...formData,
-  //           // Make sure UID is still present in dbObj
-  //           uid: res.user.uid
-  //         };
-  
-  //         // Add user data to Firestore
-  //         await addDoc(collection(db, "students"), dbObj)
-  //           .then(() => {
-  //             console.log("User added to database successfully");
-  //             resolve("User added to database successfully");
-  //           })
-  //           .catch((err) => {
-  //             console.error("Error adding user to Firestore:", err);
-  //             reject(err.message);
-  //           });
-  //       })
-  //       .catch((err) => {
-  //         console.error("Error creating user:", err);
-  //         reject(err.message);
-  //       });
-  //   });
-  // };
   
   
 
@@ -107,7 +64,7 @@ import { lazy } from "react";
       signInWithEmailAndPassword(auth, obj.email, obj.password)
         .then(async () => {
           const q = query(
-            collection(db, "users"),
+            collection(db, "students"),
             where("uid", "==", auth.currentUser.uid)
             
           );

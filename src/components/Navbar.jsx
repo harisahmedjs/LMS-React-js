@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -6,18 +6,26 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
+import { signOutUser } from '../config/firebase/firebasemethods';
 
 export default function MenuAppBar({ data }) {
-  
   const [openModal, setOpenModal] = React.useState(false);
-
+const navigate = useNavigate()
   const handleOpenModal = () => {
     setOpenModal(true);
   };
 
   const handleCloseModal = () => {
     setOpenModal(false);
+  };
+
+  const handleLogout = () => {
+   signOutUser().then((res)=> navigate('/'))
+    handleCloseModal();
   };
 
   return (
@@ -42,35 +50,42 @@ export default function MenuAppBar({ data }) {
           </Typography>
 
           {/* Logout Image (on the right) */}
-          <img 
-            src={data.imageUrl}
-            alt="Logout" 
-            style={{ height: 40, marginLeft: 2, cursor: 'pointer' }}
-            onClick={handleOpenModal} 
+          {data && data.length > 0 && (
+            <img 
+              src={data[0].image}  // Assuming image source is in the data prop
+              alt="User"
+              style={{ height: 40, marginLeft: 2, cursor: 'pointer', borderRadius: '50%' }}
+              onClick={handleOpenModal} 
             />
-
-          {/* Logout Modal */}
-          <Dialog open={openModal} onClose={handleCloseModal}>
-            <Typography variant="h6" component="div" sx={{ p: 2 }}>
-              Are you sure you want to log out?
-            </Typography>
-            <Button onClick={handleCloseModal} sx={{ mx: 2 }}>
-              Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                // Handle logout logic here
-                handleCloseModal();
-              }}
-              variant="contained"
-              color="primary"
-            >
-              Logout
-            </Button>
-          </Dialog>
+          )}
 
         </Toolbar>
       </AppBar>
+
+      {/* Logout Modal */}
+      <Dialog open={openModal} onClose={handleCloseModal}>
+
+        <DialogContent>
+          <Box textAlign="center" borderRadius='30px' p={2}>
+            <Typography variant="h5" component="div">
+              Logout
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              Are you sure you want to log out?
+            </Typography>
+          </Box>
+        </DialogContent>
+
+        <DialogActions>
+          <Button onClick={handleCloseModal} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleLogout} variant="contained" color="primary">
+            Logout
+          </Button>
+        </DialogActions>
+
+      </Dialog>
     </Box>
   );
 }

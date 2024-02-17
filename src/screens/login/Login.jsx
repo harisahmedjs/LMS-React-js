@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { loginUser } from '../../config/firebase/firebasemethods.js';
 import { useNavigate } from 'react-router-dom'
+import { useRef } from 'react';
 
 function Copyright(props) {
   return (
@@ -32,38 +33,33 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function Login() {
+ function Login() {
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+const email = useRef()
+const userPass = useRef()
+
+
+
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    // signUpUser({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    //   type: 'admin'
-    // }).then((res)=>{
-    //   console.log(res);
-    // }).catch((err)=>{
-    //   console.log(err);
-    // })
-    loginUser({
-      email: data.get('email'),
-      password: data.get('password'),
-    }).then((res) => {
-      console.log(res.type);
-      if (res.type === 'student') {
-        navigate('/student')
-      } else {
-        navigate('/admin')
-      }
-    }).catch((err) => {
-      console.log(err);
-    })
+    const obj ={
+      email : email.current.value ,
+      password : userPass.current.value ,
+    }
+    console.log(obj);
+  loginUser(obj)
+  .then((res)=>{
+console.log(res.type);
+    if (res.type === 'student') {
+      navigate ('/student')
+    } else {
+      navigate('/admission')
+    }
+  })
+ 
   };
 
 
@@ -95,6 +91,7 @@ export default function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+               inputRef={email}
             />
             <TextField
               margin="normal"
@@ -105,6 +102,7 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              inputRef={userPass}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -131,3 +129,4 @@ export default function Login() {
     </ThemeProvider>
   );
 }
+export default Login
