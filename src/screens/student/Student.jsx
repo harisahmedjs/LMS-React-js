@@ -3,6 +3,7 @@ import MenuAppBar from '../../components/Navbar';
 import { getData, auth } from '../../config/firebase/firebasemethods';
 import { onAuthStateChanged } from 'firebase/auth';
 
+
 const Student = () => {
   const [arr, setArr] = useState([]);
 
@@ -25,12 +26,12 @@ const Student = () => {
     <>
       <MenuAppBar data={arr} />
 
-      <div className="container mt-4">
+      <div className="container mt-4 w-75">
         <div className="row">
-          {arr.map((item, index) => (
+          {arr && arr.map((item, index) => ( // Add null check for arr
             <div key={index} className="col-md-4 mb-4">
               <div className="card">
-                <img src={item.image} className="card-img-top" alt="" />
+                <img src={item.image} className="card-img-top " alt="" />
                 <div className="card-body">
                   <h5 className="card-title">{item.fullName}</h5>
                   <p className="card-text">{item.course}</p>

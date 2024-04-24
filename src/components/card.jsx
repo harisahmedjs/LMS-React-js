@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardMedia, Typography, ThemeProvider, createTheme } from '@mui/material';
 import { makeStyles } from '@mui/styles'; // Import makeStyles from @mui/styles for compatibility
+import { useState } from 'react';
 
 const theme = createTheme(); // Create a theme
 
@@ -33,7 +34,7 @@ const UserProfileCard = ({ userDetails }) => {
           component="img"
           alt="User Image"
           height="150"
-          image={userDetails.image} // Assuming you have an image URL in userDetails
+          image={userDetails.image} 
         />
         <CardContent className={classes.cardContent}>
           <Typography variant="h6" gutterBottom>

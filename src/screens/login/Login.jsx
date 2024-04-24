@@ -119,7 +119,7 @@ console.log(res.type);
             <Grid container>
               <Grid item xs>
                 <Link href="/Admission" variant="body2">
-                  Forgot password?
+                 Dont Have an account?
                 </Link>
               </Grid>
             </Grid>
