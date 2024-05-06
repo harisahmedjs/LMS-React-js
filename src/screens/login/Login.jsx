@@ -29,7 +29,7 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
+
 
 const defaultTheme = createTheme();
 
@@ -56,7 +56,7 @@ console.log(res.type);
     if (res.type === 'student') {
       navigate ('/student')
     } else {
-      navigate('/admission')
+      navigate('/admin')
     }
   })
  

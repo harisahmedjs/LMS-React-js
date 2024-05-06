@@ -61,7 +61,7 @@ const Admission = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    signUpUser({...formData , type: 'student' , imageUrl: formData.image })
+    signUpUser({...formData , type: 'admin' , imageUrl: formData.image })
     .then((res)=>{
       if(res){
           navigate('/student')
