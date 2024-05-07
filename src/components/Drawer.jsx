@@ -1,4 +1,8 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { getData, auth, signOutUser } from '../config/firebase/firebasemethods';
+import { useNavigate } from 'react-router-dom';
+import LogoutModal from './Modal';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -18,8 +22,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import { useNavigate } from 'react-router-dom'
-
 
 const drawerWidth = 240;
 
@@ -52,10 +54,6 @@ const AppBar = styled(MuiAppBar, {
   ...(open && {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
   }),
 }));
 
@@ -68,37 +66,70 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-
-
-export default function PersistentDrawerLeft({ screen }) {
+const PersistentDrawerLeft = ({ screen }) => {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+
+        getData('students', uid)
+          .then((res) => {
+            console.log('Fetched user data:', res);
+            setUserData(res);
+          })
+          .catch((error) => {
+            console.error('Error fetching data:', error);
+          });
+      } else {
+        // User is not authenticated
+        setUserData(null);
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  const handleLogout = () => {
+    signOutUser()
+      .then(() => {
+        navigate('/');
+      })
+      .catch((error) => {
+        console.error('Error signing out:', error);
+      });
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleOpenLogoutModal = () => {
+    setIsLogoutModalOpen(true); // Function to open the logout modal
   };
 
-  //react-router navigate hook
-const navigate = useNavigate();
+  const handleCloseLogoutModal = () => {
+    setIsLogoutModalOpen(false); // Function to close the logout modal
+  };
 
-const goToSpecificRoute = (text) => {
-  if(text === 'Add Course'){
-    navigate('/admin');
-    return
-  }
-  if(text === 'All Course'){
-    navigate('/admin/allcourse');
-    return
-  }
-  if(text === 'All Students'){
-    navigate('/admin/allstudents');
-    return
-  }
-}
+  const goToSpecificRoute = (text) => {
+    switch (text) {
+      case 'Add Course':
+        navigate('/admin');
+        break;
+      case 'All Course':
+        navigate('/admin/allcourse');
+        break;
+      case 'All Students':
+        navigate('/admin/allstudents');
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -108,15 +139,42 @@ const goToSpecificRoute = (text) => {
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={() => setOpen(true)}
             edge="start"
             sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Persistent drawer
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+          Admin Pannel
           </Typography>
+          {/* Display user image in a circular container in the app bar */}
+          {userData && (
+            <div
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: '50%',
+                overflow: 'hidden',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                cursor: 'pointer',
+                marginLeft: 'auto',
+              }}
+              onClick={handleOpenLogoutModal}
+            >
+              <img
+                src={userData[0].imageUrl} // Assuming userData contains an 'imageUrl' property
+                alt="User"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover', // Ensure the image covers the circular container
+                }}
+              />
+            </div>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -133,19 +191,26 @@ const goToSpecificRoute = (text) => {
         open={open}
       >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={() => setOpen(false)}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
           {['Add Course', 'All Course', 'All Students'].map((text, index) => (
-            <ListItem key={text} disablePadding>
+            <ListItem
+              key={text}
+              disablePadding
+              onClick={() => {
+                goToSpecificRoute(text);
+                setOpen(false); // Close the drawer after selecting a menu item
+              }}
+            >
               <ListItemButton>
                 <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                 </ListItemIcon>
-                <ListItemText primary={text} onClick={() => goToSpecificRoute(text)} />
+                <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
           ))}
@@ -156,6 +221,14 @@ const goToSpecificRoute = (text) => {
         <DrawerHeader />
         {screen}
       </Main>
+      {/* Logout Modal */}
+      <LogoutModal
+        open={isLogoutModalOpen}
+        onClose={handleCloseLogoutModal}
+        onLogout={handleLogout}
+      />
     </Box>
   );
-}
+};
+
+export default PersistentDrawerLeft;
