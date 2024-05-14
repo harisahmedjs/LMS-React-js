@@ -9,9 +9,8 @@ import {
   FormControl,
   InputLabel,
   Select,
-  Box,
 } from '@mui/material';
-import { signUpUser , addImageToStorage} from '../../config/firebase/firebasemethods';
+import { signUpUser , addImageToStorage , sendData} from '../../config/firebase/firebasemethods';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -22,10 +21,11 @@ const Admission = () => {
     fullName: '',
     email: '',
     password: '',
-    phone: '', // Added phone field
+    phone: '', 
     address: '',
     course: '',
-    days: '', // Changed from 'formData.course'
+    type:'student',
+    days: '', 
   });
 
   const handleChange = (e) => {
@@ -48,7 +48,6 @@ const Admission = () => {
     try {
       const imageUrl = await addImageToStorage(formData.image, formData.email);
       console.log("Image URL:", imageUrl);
-      // Include the image URL in the formData
       setFormData((prevFormData) => ({
         ...prevFormData,
         image: imageUrl,
@@ -59,9 +58,10 @@ const Admission = () => {
     }
   };
 
-  const handleSubmit = async(e) => {
+   const handleSubmit = async(e) => {
     e.preventDefault();
-    signUpUser({...formData , type: 'admin' , imageUrl: formData.image })
+    
+    signUpUser({...formData  , imageUrl: formData.image })
     .then((res)=>{
       if(res){
           navigate('/student')
@@ -70,29 +70,6 @@ const Admission = () => {
     
     console.log(formData);
   };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  
-  //   try {
-  //     const imageUrl = await addImageToStorage(formData.image, formData.email);
-  //     console.log("Image URL:", imageUrl);
-  
-  //     // Include the image URL in the formData before signing up the user
-  //     const updatedFormData = {
-  //       ...formData,
-  //       type: 'student',
-  //       imageUrl: imageUrl,  // Add this line
-  //     };
-  
-  //     signUpUser(updatedFormData)
-  //       async.then((res) => {
-  //         navigate('/student');
-  //       });
-  //   } catch (error) {
-  //     console.error("Error uploading image:", error);
-  //   }
-  // };
-  
 
 
   const consollingvalue = (e) =>{

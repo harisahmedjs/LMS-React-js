@@ -1,68 +1,107 @@
 import React, { useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { getData, auth, signOutUser } from '../../../config/firebase/firebasemethods';
+import { getData, auth ,sendData } from '../../../config/firebase/firebasemethods';
 import { useNavigate } from 'react-router-dom';
-import LogoutModal from '../../../components/Modal';
-import PersistentDrawerLeft from '../../../components/Drawer'; // Import the updated sidebar component
+import PersistentDrawerLeft from '../../../components/Drawer';
+import { TextField, Button, Typography, Grid, Paper } from '@mui/material'; 
 
 const AddCourse = () => {
-  const [userData, setUserData] = useState(null);
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false); // State to track sidebar open/close
   const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
+  const [formData, setFormData] = useState({
+    Course: '',
+    Instructor: '',
+    Timing: '',
+  });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
-
         getData('students', uid)
           .then((res) => {
-            console.log('Fetched user data:', res);
+            // Update user data in state
             setUserData(res);
           })
           .catch((error) => {
             console.error('Error fetching data:', error);
           });
-      } else {
-        // User is not authenticated
-        setUserData(null);
       }
     });
 
     return () => {
       unsubscribe();
     };
-  }, []); // Empty dependency array means this effect runs once after the component mounts
+  }, []);
 
-  const handleLogout = () => {
-    signOutUser()
-      .then(() => {
-        navigate('/');
-      })
-      .catch((error) => {
-        console.error('Error signing out:', error);
-      });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
-  const handleOpenLogoutModal = () => {
-    setIsLogoutModalOpen(true); // Function to open the logout modal
-  };
-
-  const handleToggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen); // Toggle sidebar open/close
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Here you can perform form submission logic, such as sending data to backend
+    console.log('Form data:', formData);
+    setFormData({
+      Course: '',
+      Instructor: '',
+      Timing: '',
+    });
   };
 
   return (
-    <>
-     
-<div>hello</div>
+    <div>
+      <PersistentDrawerLeft screen={<div />} />
 
-      <PersistentDrawerLeft
-        screen={<div />} 
-      />
-
-    </>
+      <Grid container justifyContent="center" mt={4} style={{ padding: '20px' }}>
+        <Grid item xs={10} sm={8} md={6}>
+          <Paper elevation={3} p={4}>
+            <Typography variant="h5" gutterBottom>
+              Add a Course
+            </Typography>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+              <TextField
+                label="Course Name"
+                variant="outlined"
+                name="Course"
+                value={formData.Course}
+                onChange={handleChange}
+                required
+                style={{ marginBottom: '20px' }}
+                fullWidth
+              />
+              <TextField
+                label="Instructor Name"
+                variant="outlined"
+                name="Instructor"
+                value={formData.Instructor}
+                onChange={handleChange}
+                required
+                style={{ marginBottom: '20px' }}
+                fullWidth
+              />
+              <TextField
+                label="Course Timing"
+                variant="outlined"
+                name="Timing"
+                value={formData.Timing}
+                onChange={handleChange}
+                required
+                style={{ marginBottom: '20px' }}
+                fullWidth
+              />
+              <Button type="submit" variant="contained" color="primary" fullWidth>
+                Submit
+              </Button>
+            </form>
+          </Paper>
+        </Grid>
+      </Grid>
+    </div>
   );
 };
 
