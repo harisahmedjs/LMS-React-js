@@ -44,7 +44,10 @@ const AddCourse = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you can perform form submission logic, such as sending data to backend
+    sendData(formData , 'courses')
+    .then((res)=>{
+      console.log('courses added to db');
+    })
     console.log('Form data:', formData);
     setFormData({
       Course: '',

@@ -64,7 +64,7 @@ const Admission = () => {
     signUpUser({...formData  , imageUrl: formData.image })
     .then((res)=>{
       if(res){
-          navigate('/student')
+          navigate('/student') 
       }
     })
     
