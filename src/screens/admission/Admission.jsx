@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   TextField,
@@ -10,13 +10,13 @@ import {
   InputLabel,
   Select,
 } from '@mui/material';
-import { signUpUser , addImageToStorage , sendData} from '../../config/firebase/firebasemethods';
+import { collection, getDocs } from "firebase/firestore"; 
+import { signUpUser, addImageToStorage, db } from '../../config/firebase/firebasemethods';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-
 const Admission = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -24,9 +24,24 @@ const Admission = () => {
     phone: '', 
     address: '',
     course: '',
-    type:'student',
+    type: 'student',
     days: '', 
   });
+
+  const [courses, setCourses] = useState([]);
+
+  const getting = async () => {
+    const querySnapshot = await getDocs(collection(db, "courses"));
+    const coursesList = [];
+    querySnapshot.forEach((doc) => {
+      coursesList.push({ id: doc.id, ...doc.data() });
+    });
+    setCourses(coursesList);
+  };
+
+  useEffect(() => {
+    getting();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,6 +50,7 @@ const Admission = () => {
       [name]: value,
     }));
   };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setFormData((prevFormData) => ({
@@ -42,7 +58,6 @@ const Admission = () => {
       image: file,
     }));
   };
-  
   
   const handleImage = async () => {
     try {
@@ -52,29 +67,22 @@ const Admission = () => {
         ...prevFormData,
         image: imageUrl,
       }));
-      Swal.fire("image uploaded successfully");
+      Swal.fire("Image uploaded successfully");
     } catch (error) {
       console.error("Error uploading image:", error);
     }
   };
 
-   const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
-    signUpUser({...formData  , imageUrl: formData.image })
-    .then((res)=>{
-      if(res){
-          navigate('/student') 
-      }
-    })
-    
-    console.log(formData);
+    try {
+      await signUpUser({ ...formData, imageUrl: formData.image });
+      navigate('/student');
+    } catch (error) {
+      console.error("Error signing up user:", error);
+    }
   };
-
-
-  const consollingvalue = (e) =>{
-    e.preventDefault();
-  }
 
   return (
     <Container maxWidth="sm">
@@ -146,10 +154,11 @@ const Admission = () => {
                 value={formData.course}
                 onChange={handleChange}
               >
-                <MenuItem value="null">Null</MenuItem>
-                <MenuItem value="Web And App Development">Web And App Development</MenuItem>
-                <MenuItem value="Graphic Designing">Graphic Designing</MenuItem>
-                <MenuItem value="Flutter">Flutter</MenuItem>
+                {courses.map((course) => (
+                  <MenuItem key={course.id} value={course.id}>
+                    {course.Course}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
@@ -162,22 +171,21 @@ const Admission = () => {
                 value={formData.days}
                 onChange={handleChange}
               >
-                <MenuItem value="WMF">WMA</MenuItem>
+                <MenuItem value="WMF">WMF</MenuItem>
                 <MenuItem value="TTS">TTS</MenuItem>
               </Select>
             </FormControl>
           </Grid>
-          
           <Grid item xs={12}>
-          <input type="file" onChange={handleFileChange} />
-            </Grid>
-            <Grid item xs={12}>
-            <Button variant="contained" color="primary" onClick={handleImage} > Upload Image
+            <input type="file" onChange={handleFileChange} />
+          </Grid>
+          <Grid item xs={12}>
+            <Button variant="contained" color="primary" onClick={handleImage}>
+              Upload Image
             </Button>
-            </Grid>
-            
+          </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" color="primary" type="submit" >
+            <Button variant="contained" color="primary" type="submit">
               Submit
             </Button>
           </Grid>
