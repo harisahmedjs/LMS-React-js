@@ -39,6 +39,8 @@ const Admission = () => {
     setCourses(coursesList);
   };
 
+
+
   useEffect(() => {
     getting();
   }, []);

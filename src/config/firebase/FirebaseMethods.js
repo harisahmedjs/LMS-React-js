@@ -40,7 +40,7 @@ import { lazy } from "react";
             ...formData,
             uid: res.user.uid
           }
-          await addDoc(collection(db, "students"), dbObj)
+          await addDoc(collection(db, "student"), dbObj)
             .then((res) => {
               console.log("user added to database successfully");
               // navigate('/student')
