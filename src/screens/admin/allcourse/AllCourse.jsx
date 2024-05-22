@@ -29,7 +29,7 @@ const AllCourse = () => {
             <div className="card-body">
               <h5 className="card-title">{course.Course}</h5>
               <p className="card-text">Instructor: {course.Instructor}</p>
-              <p className="card-text">Timing: {course.Timing}</p>
+              <p ="card-text">Timing: {course.Timing}</p>
             </div>
           </div>
         </div>
