@@ -12,9 +12,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { CircularProgress } from '@mui/material';
 import { loginUser } from '../../config/firebase/firebasemethods.js';
-import { useNavigate } from 'react-router-dom'
-import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRef, useState } from 'react';
 
 function Copyright(props) {
   return (
@@ -29,39 +30,38 @@ function Copyright(props) {
   );
 }
 
-
-
 const defaultTheme = createTheme();
 
- function Login() {
-
-  const navigate = useNavigate()
-const email = useRef()
-const userPass = useRef()
-
-
-
-
+function Login() {
+  const navigate = useNavigate();
+  const email = useRef();
+  const userPass = useRef();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const obj ={
-      email : email.current.value ,
-      password : userPass.current.value ,
-    }
+    setLoading(true);
+    const obj = {
+      email: email.current.value,
+      password: userPass.current.value,
+    };
     console.log(obj);
-  loginUser(obj)
-  .then((res)=>{
-console.log(res.type);
-    if (res.type === 'student') {
-      navigate ('/student')
-    } else {
-      navigate('/admin')
-    }
-  })
- 
+    loginUser(obj)
+      .then((res) => {
+        console.log(res.type);
+        if (res.type === 'student') {
+          navigate('/student');
+        } else {
+          navigate('/admin');
+        }
+      })
+      .catch((error) => {
+        console.error("Login error: ", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
-
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -91,7 +91,7 @@ console.log(res.type);
               name="email"
               autoComplete="email"
               autoFocus
-               inputRef={email}
+              inputRef={email}
             />
             <TextField
               margin="normal"
@@ -113,13 +113,15 @@ console.log(res.type);
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={loading}
+              startIcon={loading ? <CircularProgress size={24} /> : null}
             >
-              Sign In
+              {loading ? 'Signing In...' : 'Sign In'}
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="/Admission" variant="body2">
-                 Dont Have an account?
+                  Don't have an account?
                 </Link>
               </Grid>
             </Grid>
@@ -129,4 +131,5 @@ console.log(res.type);
     </ThemeProvider>
   );
 }
-export default Login
+
+export default Login;

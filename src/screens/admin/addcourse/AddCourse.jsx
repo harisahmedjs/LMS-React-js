@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { getData, auth ,sendData } from '../../../config/firebase/firebasemethods';
+import { getData, auth, sendData } from '../../../config/firebase/firebasemethods';
 import { useNavigate } from 'react-router-dom';
 import PersistentDrawerLeft from '../../../components/Drawer';
-import { TextField, Button, Typography, Grid, Paper } from '@mui/material'; 
+import { TextField, Button, Typography, Grid, Paper, CircularProgress } from '@mui/material';
 
 const AddCourse = () => {
   const navigate = useNavigate();
@@ -13,6 +13,7 @@ const AddCourse = () => {
     Instructor: '',
     Timing: '',
   });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -20,7 +21,6 @@ const AddCourse = () => {
         const uid = user.uid;
         getData('students', uid)
           .then((res) => {
-            // Update user data in state
             setUserData(res);
           })
           .catch((error) => {
@@ -44,22 +44,27 @@ const AddCourse = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    sendData(formData , 'courses')
-    .then((res)=>{
-      console.log('courses added to db');
-    })
-    console.log('Form data:', formData);
-    setFormData({
-      Course: '',
-      Instructor: '',
-      Timing: '',
-    });
+    setLoading(true);
+    sendData(formData, 'courses')
+      .then((res) => {
+        console.log('Course added to db');
+        setFormData({
+          Course: '',
+          Instructor: '',
+          Timing: '',
+        });
+      })
+      .catch((error) => {
+        console.error('Error adding course:', error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
     <div>
       <PersistentDrawerLeft screen={<div />} />
-
       <Grid container justifyContent="center" mt={4} style={{ padding: '20px' }}>
         <Grid item xs={10} sm={8} md={6}>
           <Paper elevation={3} p={4}>
@@ -97,8 +102,15 @@ const AddCourse = () => {
                 style={{ marginBottom: '20px' }}
                 fullWidth
               />
-              <Button type="submit" variant="contained" color="primary" fullWidth>
-                Submit
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+                disabled={loading}
+                startIcon={loading ? <CircularProgress size={24} /> : null}
+              >
+                {loading ? 'Submitting...' : 'Submit'}
               </Button>
             </form>
           </Paper>

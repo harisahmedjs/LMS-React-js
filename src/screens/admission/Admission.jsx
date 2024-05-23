@@ -9,11 +9,13 @@ import {
   FormControl,
   InputLabel,
   Select,
+  CircularProgress
 } from '@mui/material';
 import { collection, getDocs } from "firebase/firestore"; 
 import { signUpUser, addImageToStorage, db } from '../../config/firebase/firebasemethods';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import 'animate.css';
 
 const Admission = () => {
   const navigate = useNavigate();
@@ -27,8 +29,8 @@ const Admission = () => {
     type: 'student',
     days: '', 
   });
-
   const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getting = async () => {
     const querySnapshot = await getDocs(collection(db, "courses"));
@@ -38,8 +40,6 @@ const Admission = () => {
     });
     setCourses(coursesList);
   };
-
-
 
   useEffect(() => {
     getting();
@@ -77,23 +77,25 @@ const Admission = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    setLoading(true);
     try {
       await signUpUser({ ...formData, imageUrl: formData.image });
       navigate('/student');
     } catch (error) {
       console.error("Error signing up user:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Container maxWidth="sm">
-      <Typography variant="h4" align="center" gutterBottom>
+    <Container maxWidth="sm" className="animate__animated animate__fadeIn">
+      <Typography variant="h4" align="center" gutterBottom className="animate__animated animate__fadeInDown">
         Admission Form
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="animate__animated animate__fadeInLeft">
             <TextField
               fullWidth
               label="Full Name"
@@ -103,7 +105,7 @@ const Admission = () => {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="animate__animated animate__fadeInRight">
             <TextField
               fullWidth
               label="Email"
@@ -113,7 +115,7 @@ const Admission = () => {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="animate__animated animate__fadeInLeft">
             <TextField
               fullWidth
               label="Password"
@@ -124,7 +126,7 @@ const Admission = () => {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="animate__animated animate__fadeInRight">
             <TextField
               fullWidth
               label="Phone"
@@ -135,7 +137,7 @@ const Admission = () => {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="animate__animated animate__fadeInLeft">
             <TextField
               fullWidth
               label="Address"
@@ -147,7 +149,7 @@ const Admission = () => {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="animate__animated animate__fadeInRight">
             <FormControl fullWidth margin="normal">
               <InputLabel>Course</InputLabel>
               <Select
@@ -164,7 +166,7 @@ const Admission = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="animate__animated animate__fadeInLeft">
             <FormControl fullWidth margin="normal">
               <InputLabel>Days</InputLabel>
               <Select
@@ -178,17 +180,30 @@ const Admission = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="animate__animated animate__fadeInRight">
             <input type="file" onChange={handleFileChange} />
           </Grid>
-          <Grid item xs={12}>
-            <Button variant="contained" color="primary" onClick={handleImage}>
+          <Grid item xs={12} className="animate__animated animate__fadeInLeft">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleImage}
+              fullWidth
+              style={{ marginBottom: '1rem' }}
+            >
               Upload Image
             </Button>
           </Grid>
-          <Grid item xs={12}>
-            <Button variant="contained" color="primary" type="submit">
-              Submit
+          <Grid item xs={12} className="animate__animated animate__fadeInRight">
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              fullWidth
+              disabled={loading}
+              startIcon={loading && <CircularProgress size={24} />}
+            >
+              {loading ? 'Submitting...' : 'Submit'}
             </Button>
           </Grid>
         </Grid>
