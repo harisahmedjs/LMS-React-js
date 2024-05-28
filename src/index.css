@@ -40,4 +40,17 @@
   .card {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
+  .square-image-container {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    margin: 0 auto; /* Center the image */
+  }
+  
+  .square-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
   
