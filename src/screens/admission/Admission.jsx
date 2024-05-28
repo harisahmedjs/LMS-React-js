@@ -11,11 +11,13 @@ import {
   Select,
   CircularProgress
 } from '@mui/material';
-import { collection, getDocs } from "firebase/firestore"; 
+import { collection, getDocs } from 'firebase/firestore'; 
 import { signUpUser, addImageToStorage, db } from '../../config/firebase/firebasemethods';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import 'animate.css';
+import image from '../../assets/OIP.jpg'
+import './Admission.css'
 
 const Admission = () => {
   const navigate = useNavigate();
@@ -89,126 +91,138 @@ const Admission = () => {
   };
 
   return (
-    <Container maxWidth="sm" className="animate__animated animate__fadeIn">
-      <Typography variant="h4" align="center" gutterBottom className="animate__animated animate__fadeInDown">
-        Admission Form
-      </Typography>
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} className="animate__animated animate__fadeInLeft">
-            <TextField
-              fullWidth
-              label="Full Name"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} className="animate__animated animate__fadeInRight">
-            <TextField
-              fullWidth
-              label="Email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} className="animate__animated animate__fadeInLeft">
-            <TextField
-              fullWidth
-              label="Password"
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} className="animate__animated animate__fadeInRight">
-            <TextField
-              fullWidth
-              label="Phone"
-              name="phone"
-              type="tel"
-              value={formData.phone}
-              onChange={handleChange}
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} className="animate__animated animate__fadeInLeft">
-            <TextField
-              fullWidth
-              label="Address"
-              name="address"
-              multiline
-              rows={3}
-              value={formData.address}
-              onChange={handleChange}
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} className="animate__animated animate__fadeInRight">
-            <FormControl fullWidth margin="normal">
-              <InputLabel>Course</InputLabel>
-              <Select
-                label="Course"
-                name="course"
-                value={formData.course}
+    <div className="admission-container">
+      <div className="image-container">
+        <img src={image} alt="Description" className="admission-image" />
+      </div>
+      <Container maxWidth="sm" className="form-container animate__animated animate__fadeIn">
+        <Typography sx={{color: 'white'}} variant="h4" align="center" gutterBottom className="animate__animated animate__fadeInDown">
+          Admission Form
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} className="animate__animated animate__fadeInLeft">
+              <TextField
+                fullWidth
+                label="Full Name"
+                name="fullName"
+                value={formData.fullName}
                 onChange={handleChange}
-              >
-                {courses.map((course) => (
-                  <MenuItem key={course.id} value={course.id}>
-                    {course.Course}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} className="animate__animated animate__fadeInLeft">
-            <FormControl fullWidth margin="normal">
-              <InputLabel>Days</InputLabel>
-              <Select
-                label="Days"
-                name="days"
-                value={formData.days}
+                variant="outlined"
+                sx={{background: 'white'}}
+              />
+            </Grid>
+            <Grid item xs={12} className="animate__animated animate__fadeInRight">
+              <TextField
+                fullWidth
+                label="Email"
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
+                variant="outlined"
+                sx={{background: 'white'}}
+              />
+            </Grid>
+            <Grid item xs={12} className="animate__animated animate__fadeInLeft">
+              <TextField
+                fullWidth
+                label="Password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                variant="outlined"
+                sx={{background: 'white'}}
+              />
+            </Grid>
+            <Grid item xs={12} className="animate__animated animate__fadeInRight">
+              <TextField
+                fullWidth
+                label="Phone"
+                name="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={handleChange}
+                variant="outlined"
+                sx={{background: 'white'}}
+              />
+            </Grid>
+            <Grid item xs={12} className="animate__animated animate__fadeInLeft">
+              <TextField
+                fullWidth
+                label="Address"
+                name="address"
+                multiline
+                rows={3}
+                value={formData.address}
+                onChange={handleChange}
+                variant="outlined"
+                sx={{background: 'white'}}
+              />
+            </Grid>
+            <Grid item xs={12} className="animate__animated animate__fadeInRight">
+              <FormControl fullWidth margin="normal">
+                <InputLabel sx={{color: 'black'}}>Course</InputLabel>
+                <Select
+                  label="Course"
+                  name="course"
+                  value={formData.course}
+                  onChange={handleChange}
+                  sx={{background: 'white'}}
+                >
+                  {courses.map((course) => (
+                    <MenuItem key={course.id} value={course.id}>
+                      {course.Course}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} className="animate__animated animate__fadeInLeft">
+              <FormControl fullWidth margin="normal">
+                <InputLabel sx={{color: 'black'}}>Days</InputLabel>
+                <Select
+                  label="Days"
+                  name="days"
+                  value={formData.days}
+                  onChange={handleChange}
+                  sx={{background : 'white'}}
+                >
+                  <MenuItem value="WMF">WMF</MenuItem>
+                  <MenuItem value="TTS">TTS</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} className="animate__animated animate__fadeInRight">
+              <input type="file" onChange={handleFileChange} />
+            </Grid>
+            <Grid item xs={12} className="animate__animated animate__fadeInLeft">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleImage}
+                fullWidth
+                style={{ marginBottom: '1rem' }}
               >
-                <MenuItem value="WMF">WMF</MenuItem>
-                <MenuItem value="TTS">TTS</MenuItem>
-              </Select>
-            </FormControl>
+                Upload Image
+              </Button>
+            </Grid>
+            <Grid item xs={12} className="animate__animated animate__fadeInRight">
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                fullWidth
+                disabled={loading}
+                startIcon={loading && <CircularProgress size={24} />}
+              >
+                {loading ? 'Submitting...' : 'Submit'}
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12} className="animate__animated animate__fadeInRight">
-            <input type="file" onChange={handleFileChange} />
-          </Grid>
-          <Grid item xs={12} className="animate__animated animate__fadeInLeft">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleImage}
-              fullWidth
-              style={{ marginBottom: '1rem' }}
-            >
-              Upload Image
-            </Button>
-          </Grid>
-          <Grid item xs={12} className="animate__animated animate__fadeInRight">
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              fullWidth
-              disabled={loading}
-              startIcon={loading && <CircularProgress size={24} />}
-            >
-              {loading ? 'Submitting...' : 'Submit'}
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Container>
+        </form>
+      </Container>
+    </div>
   );
 };
 

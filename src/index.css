@@ -53,4 +53,25 @@
     object-fit: cover;
   }
   
+  .admission-container {
+    display: flex;
+    height: 110vh;
+  }
+  
+  .image-container {
+    padding: 0;
+  }
+  
+  .admission-image {
+    width: 100%;
+    height: 110vh;
+    object-fit: cover;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* padding: 2rem; */
+  }
   
