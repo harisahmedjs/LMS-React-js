@@ -16,8 +16,7 @@ import { signUpUser, addImageToStorage, db } from '../../config/firebase/firebas
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import 'animate.css';
-import image from '../../assets/OIP.jpg'
-import './Admission.css'
+
 
 const Admission = () => {
   const navigate = useNavigate();
@@ -92,11 +91,9 @@ const Admission = () => {
 
   return (
     <div className="admission-container">
-      <div className="image-container">
-        <img src={image} alt="Description" className="admission-image" />
-      </div>
+      
       <Container maxWidth="sm" className="form-container animate__animated animate__fadeIn">
-        <Typography sx={{color: 'white'}} variant="h4" align="center" gutterBottom className="animate__animated animate__fadeInDown">
+        <Typography sx={{color : '#343a40'}} variant="h4" align="center" gutterBottom className="animate__animated animate__fadeInDown">
           Admission Form
         </Typography>
         <form onSubmit={handleSubmit}>
@@ -197,27 +194,34 @@ const Admission = () => {
               <input type="file" onChange={handleFileChange} />
             </Grid>
             <Grid item xs={12} className="animate__animated animate__fadeInLeft">
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleImage}
-                fullWidth
-                style={{ marginBottom: '1rem' }}
-              >
-                Upload Image
-              </Button>
+            <Button
+  onClick={handleImage}
+  fullWidth
+  sx={{
+    marginBottom: '1rem',
+    color : ' #343a40',
+    backgroundColor: '#0078d4',
+  }}
+>
+  Upload Image
+</Button>
             </Grid>
             <Grid item xs={12} className="animate__animated animate__fadeInRight">
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                fullWidth
-                disabled={loading}
-                startIcon={loading && <CircularProgress size={24} />}
-              >
-                {loading ? 'Submitting...' : 'Submit'}
-              </Button>
+            <Button
+  type="submit"
+  fullWidth
+  disabled={loading}
+  sx={{
+    backgroundColor: '#343a40',
+    color: '#ffffff',
+    '&:hover': {
+      backgroundColor: '#343a40', // Ensure it remains the same on hover
+    },
+  }}
+  startIcon={loading && <CircularProgress size={24} />}
+>
+  {loading ? 'Submitting...' : 'Submit'}
+</Button>
             </Grid>
           </Grid>
         </form>
