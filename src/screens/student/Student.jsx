@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { getData, auth } from '../../config/firebase/firebasemethods';
+import { getData } from '../../config/firebase/FirebaseMethods';
+import { auth } from '../../config/firebase/firebaseconfig';
 import MenuAppBar from '../../components/Navbar';
 import { Container, Grid, Card, CardMedia, CardContent, Typography } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';

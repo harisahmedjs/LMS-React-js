@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, where, query } from "firebase/firestore"; 
-import { db } from '../../../config/firebase/firebasemethods';
+import { db } from '../../../config/firebase/firebaseconfig';
 
 const AllStudents = () => {
   const [arr, setArr] = useState([]);

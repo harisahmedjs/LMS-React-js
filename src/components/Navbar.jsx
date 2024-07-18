@@ -10,7 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
-import { signOutUser } from '../config/firebase/firebasemethods';
+import { signOutUser } from '../config/firebase/FirebaseMethods';
 
 export default function MenuAppBar({ data }) {
   const [openModal, setOpenModal] = React.useState(false);

@@ -12,7 +12,8 @@ import {
   CircularProgress
 } from '@mui/material';
 import { collection, getDocs } from 'firebase/firestore'; 
-import { signUpUser, addImageToStorage, db } from '../../config/firebase/firebasemethods';
+import { signUpUser, addImageToStorage } from '../../config/firebase/FirebaseMethods';
+import { db } from '../../config/firebase/firebaseconfig';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import 'animate.css';
@@ -27,7 +28,7 @@ const Admission = () => {
     phone: '', 
     address: '',
     course: '',
-    type: 'student',
+    type: 'admin',
     days: '', 
   });
   const [courses, setCourses] = useState([]);
@@ -81,7 +82,7 @@ const Admission = () => {
     setLoading(true);
     try {
       await signUpUser({ ...formData, imageUrl: formData.image });
-      navigate('/student');
+      navigate('/admin');
     } catch (error) {
       console.error("Error signing up user:", error);
     } finally {

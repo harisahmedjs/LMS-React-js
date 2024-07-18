@@ -190,4 +190,4 @@ import { lazy } from "react";
       }
     });
   };
-  export { auth, db,storage, signUpUser, loginUser, signOutUser, sendData, getData, getAllData, deleteDocument, updateDocument, addImageToStorage };
+  export { storage, signUpUser, loginUser, signOutUser, sendData, getData, getAllData, deleteDocument, updateDocument, addImageToStorage };

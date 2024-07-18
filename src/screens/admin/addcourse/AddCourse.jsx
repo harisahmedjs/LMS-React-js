@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { getData, auth, sendData } from '../../../config/firebase/firebasemethods';
+import { getData, sendData } from '../../../config/firebase/FirebaseMethods';
+import { auth } from '../../../config/firebase/firebaseconfig';
 import { useNavigate } from 'react-router-dom';
 import PersistentDrawerLeft from '../../../components/Drawer';
 import { TextField, Button, Typography, Grid, Paper, CircularProgress } from '@mui/material';

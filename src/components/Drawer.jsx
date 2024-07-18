@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { getData, auth, signOutUser } from '../config/firebase/firebasemethods';
+import { getData, signOutUser } from '../config/firebase/FirebaseMethods';
+import { auth } from '../config/firebase/firebaseconfig';
 import { useNavigate } from 'react-router-dom';
 import LogoutModal from './Modal';
 import { styled, useTheme } from '@mui/material/styles';
@@ -78,7 +79,7 @@ const PersistentDrawerLeft = ({ screen }) => {
       if (user) {
         const uid = user.uid;
 
-        getData('students', uid)
+        getData('student', uid)
           .then((res) => {
             console.log('Fetched user data:', res);
             setUserData(res);
