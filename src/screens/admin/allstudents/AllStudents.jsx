@@ -23,21 +23,28 @@ const AllStudents = () => {
   return (
     <div className="container mt-5">
       <h1 className="mb-4">All Students</h1>
-      <div className="row">
-        {arr.map((student, index) => (
-          <div key={index} className="col-md-4 mb-4">
-            <div className="card h-100">
-              <div className="card-body">
-                <img src={student.imageUrl} alt="Student" />
-                <div>
-                  <h5 className="card-title">{student.fullName}</h5>
-                  <p className="card-text">Course: {student.course}</p>
+      {
+        arr.length === 0 ?(
+          <h2 style={{textAlign : "center"}}>No student found...</h2>
+        ):(
+          <div className="row">
+          {arr.map((student, index) => (
+            <div key={index} className="col-md-4 mb-4">
+              <div className="card h-100">
+                <div className="card-body">
+                  <img src={student.imageUrl} alt="Student" />
+                  <div>
+                    <h5 className="card-title">{student.fullName}</h5>
+                    <p className="card-text">Course: {student.course}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+        )
+      }
+   
     </div>
   );
 };

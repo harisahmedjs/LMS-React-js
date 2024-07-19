@@ -66,13 +66,13 @@ const AddCourse = () => {
   return (
     <div>
       <PersistentDrawerLeft screen={<div />} />
-      <Grid container justifyContent="center" mt={4} style={{ padding: '20px' }}>
-        <Grid item xs={10} sm={8} md={6}>
-          <Paper elevation={3} p={4}>
-            <Typography variant="h5" gutterBottom>
+      <Grid container justifyContent="center" mt={4} width={'80%'} margin={'auto'} sx={{ borderRadius: '40px' }} >
+        <Grid item xs={10} sm={8} md={6} >
+          <Paper elevation={3} sx={{ padding: 3 }} >
+            <Typography variant="h5" gutterBottom sx={{textAlign : 'center'}}>
               Add a Course
             </Typography>
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' , width : "70%" , margin : 'auto'}}>
               <TextField
                 label="Course Name"
                 variant="outlined"
@@ -81,7 +81,6 @@ const AddCourse = () => {
                 onChange={handleChange}
                 required
                 style={{ marginBottom: '20px' }}
-                fullWidth
               />
               <TextField
                 label="Instructor Name"
@@ -91,7 +90,6 @@ const AddCourse = () => {
                 onChange={handleChange}
                 required
                 style={{ marginBottom: '20px' }}
-                fullWidth
               />
               <TextField
                 label="Course Timing"
@@ -101,7 +99,6 @@ const AddCourse = () => {
                 onChange={handleChange}
                 required
                 style={{ marginBottom: '20px' }}
-                fullWidth
               />
               <Button
                 type="submit"
