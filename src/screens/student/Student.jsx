@@ -15,7 +15,7 @@ const Student = () => {
         const uid = user.uid;
         console.log(uid);
 
-        getData('students', uid).then((res) => {
+        getData('student', uid).then((res) => {
           setArr(res);
         });
       }

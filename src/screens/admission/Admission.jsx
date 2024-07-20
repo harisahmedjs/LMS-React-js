@@ -28,7 +28,7 @@ const Admission = () => {
     phone: '', 
     address: '',
     course: '',
-    type: 'admin',
+    type: 'student',
     days: '', 
   });
   const [courses, setCourses] = useState([]);
@@ -82,7 +82,7 @@ const Admission = () => {
     setLoading(true);
     try {
       await signUpUser({ ...formData, imageUrl: formData.image });
-      navigate('/admin');
+      navigate('/');
     } catch (error) {
       console.error("Error signing up user:", error);
     } finally {
@@ -168,8 +168,8 @@ const Admission = () => {
                   onChange={handleChange}
                   sx={{background: 'white'}}
                 >
-                  {courses.map((course) => (
-                    <MenuItem key={course.id} value={course.id}>
+                  {courses.map((course , index) => (
+                    <MenuItem key={index} value={course.Course}>
                       {course.Course}
                     </MenuItem>
                   ))}

@@ -64,7 +64,7 @@ import { lazy } from "react";
       signInWithEmailAndPassword(auth, obj.email, obj.password)
         .then(async () => {
           const q = query(
-            collection(db, "students"),
+            collection(db, "student"),
             where("uid", "==", auth.currentUser.uid)
             
           );
