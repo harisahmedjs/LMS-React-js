@@ -9,7 +9,9 @@ import {
   FormControl,
   InputLabel,
   Select,
-  CircularProgress
+  CircularProgress,
+  InputAdornment,
+  IconButton
 } from '@mui/material';
 import { collection, getDocs } from 'firebase/firestore'; 
 import { signUpUser, addImageToStorage } from '../../config/firebase/FirebaseMethods';
@@ -17,9 +19,18 @@ import { db } from '../../config/firebase/firebaseconfig';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import 'animate.css';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 
 const Admission = () => {
+
+  const [showPassword, setShowPassword] = useState(false);
+ 
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
@@ -122,17 +133,26 @@ const Admission = () => {
               />
             </Grid>
             <Grid item xs={12} className="animate__animated animate__fadeInLeft">
-              <TextField
-                fullWidth
-                label="Password"
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-                variant="outlined"
-                sx={{background: 'white'}}
-              />
-            </Grid>
+      <TextField
+        fullWidth
+        label="Password"
+        name="password"
+        type={showPassword ? 'text' : 'password'}
+        value={formData.password}
+        onChange={handleChange}
+        variant="outlined"
+        sx={{ background: 'white' }}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={togglePasswordVisibility} edge="end">
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          )
+        }}
+      />
+    </Grid>
             <Grid item xs={12} className="animate__animated animate__fadeInRight">
               <TextField
                 fullWidth

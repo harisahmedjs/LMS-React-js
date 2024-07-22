@@ -12,10 +12,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, IconButton, InputAdornment } from '@mui/material';
 import { loginUser } from '../../config/firebase/FirebaseMethods.js';
 import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 function Copyright(props) {
   return (
@@ -33,6 +34,15 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 function Login() {
+
+  const [showPassword, setShowPassword] = useState(false);
+ 
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+
   const navigate = useNavigate();
   const email = useRef();
   const userPass = useRef();
@@ -93,17 +103,24 @@ function Login() {
               autoFocus
               inputRef={email}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              inputRef={userPass}
-            />
+           <TextField
+        fullWidth
+        label="Password"
+        name="password"
+        type={showPassword ? 'text' : 'password'}
+        inputRef={userPass}
+        variant="outlined"
+        sx={{ background: 'white' }}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={togglePasswordVisibility} edge="end">
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          )
+        }}
+      />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

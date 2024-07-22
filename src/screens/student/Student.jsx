@@ -5,6 +5,8 @@ import { auth } from '../../config/firebase/firebaseconfig';
 import MenuAppBar from '../../components/Navbar';
 import { Container, Grid, Card, CardMedia, CardContent, Typography } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'animate.css';
+import Swal from 'sweetalert2';
 
 const Student = () => {
   const [arr, setArr] = useState([]);
@@ -20,6 +22,25 @@ const Student = () => {
         });
       }
     });
+    setTimeout(() => {
+      // Show SweetAlert2 alert on successful login
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Successful!',
+        text: 'Welcome back!',
+        customClass: {
+          popup: 'animate__animated animate__zoomIn', // Use animate.css for animation
+        },
+        showConfirmButton: false, // Remove default "OK" button
+        timer: 3000, // Auto-close after 3 seconds
+        timerProgressBar: true, // Show progress bar
+        position: 'top-end', // Position at the top-right corner
+        width: '20rem', // Set custom width
+        padding: '0.5rem', // Adjust padding
+        backdrop: false, // Disable backdrop
+        allowOutsideClick: false, // Disable clicking outside to close
+      });
+    }, 1000);
   }, []);
 
   console.log(arr);

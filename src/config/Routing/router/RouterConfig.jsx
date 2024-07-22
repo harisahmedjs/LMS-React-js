@@ -11,7 +11,7 @@ const RouterConfig = () => {
   return (
     <BrowserRouter>
     <Routes>
-      <Route path = '' element = {<Login />} />
+      <Route path = '/' element = {<Login />} />
    <Route path = '/student' element = {<Student />} />
    <Route path = '/admission' element = {<Admission />} />  
    <Route path = 'admin/*' element = {<AdminDashboard />} />

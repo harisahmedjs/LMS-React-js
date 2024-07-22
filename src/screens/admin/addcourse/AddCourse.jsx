@@ -5,6 +5,8 @@ import { auth } from '../../../config/firebase/firebaseconfig';
 import { useNavigate } from 'react-router-dom';
 import PersistentDrawerLeft from '../../../components/Drawer';
 import { TextField, Button, Typography, Grid, Paper, CircularProgress } from '@mui/material';
+import Swal from 'sweetalert2';
+import 'animate.css';
 
 const AddCourse = () => {
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ const AddCourse = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
-        getData('students', uid)
+        getData('student', uid)
           .then((res) => {
             setUserData(res);
           })
@@ -29,10 +31,30 @@ const AddCourse = () => {
           });
       }
     });
+    setTimeout(() => {
+      // Show SweetAlert2 alert on successful login
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Successful!',
+        text: 'Welcome back!',
+        customClass: {
+          popup: 'animate__animated animate__zoomIn', // Use animate.css for animation
+        },
+        showConfirmButton: false, // Remove default "OK" button
+        timer: 3000, // Auto-close after 3 seconds
+        timerProgressBar: true, // Show progress bar
+        position: 'top-end', // Position at the top-right corner
+        width: '20rem', // Set custom width
+        padding: '0.5rem', // Adjust padding
+        backdrop: false, // Disable backdrop
+        allowOutsideClick: false, // Disable clicking outside to close
+      });
+    }, 1000);
 
     return () => {
       unsubscribe();
     };
+
   }, []);
 
   const handleChange = (e) => {
@@ -66,9 +88,9 @@ const AddCourse = () => {
   return (
     <div>
       <PersistentDrawerLeft screen={<div />} />
-      <Grid container justifyContent="center" mt={4} width={'80%'} margin={'auto'} sx={{ borderRadius: '40px' }} >
+      <Grid container justifyContent="center" mt={4} width={'80%'} sm={8} margin={'auto'}  >
         <Grid item xs={10} sm={8} md={6} >
-          <Paper elevation={3} sx={{ padding: 3 }} >
+          <Paper elevation={3}  sx={{ padding: 3 }} >
             <Typography variant="h5" gutterBottom sx={{textAlign : 'center'}}>
               Add a Course
             </Typography>
@@ -80,7 +102,7 @@ const AddCourse = () => {
                 value={formData.Course}
                 onChange={handleChange}
                 required
-                style={{ marginBottom: '20px' }}
+                style={{ marginBottom: '20px' }}  
               />
               <TextField
                 label="Instructor Name"

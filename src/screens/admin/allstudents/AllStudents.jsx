@@ -10,7 +10,7 @@ const AllStudents = () => {
   }, []);
 
   const gettingStudents = async () => {
-    const q = query(collection(db, "students"), where('type', '==', 'student'));
+    const q = query(collection(db, "student"), where('type', '==', 'student'));
     const querySnapshot = await getDocs(q);
     const studentsArray = [];
     querySnapshot.forEach((doc) => {
