@@ -164,14 +164,16 @@ import { lazy } from "react";
   
   //update document by id
   const updateDocument = async (obj, id, name) => {
-    return new Promise((resolve, reject) => {
-      const update = doc(db, name, id);
-      updateDoc(update, obj)
-      resolve("document updated")
-      
-      reject("error occured")
-    })
-  }
+    try {
+      const updateRef = doc(db, name, id); // Reference to the document to update
+      await updateDoc(updateRef, obj); // Update the document with the new data
+      return "Document updated successfully";
+    } catch (error) {
+      console.error("Error updating document:", error);
+      throw error; // Throw the error to be caught by the caller
+    }
+  };
+  
 
   // const files = profile.files[0]
   const addImageToStorage = (file, email) => {

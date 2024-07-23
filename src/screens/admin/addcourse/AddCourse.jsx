@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { getData, sendData } from '../../../config/firebase/FirebaseMethods';
+import { getData, sendData, addImageToStorage} from '../../../config/firebase/FirebaseMethods';
 import { auth } from '../../../config/firebase/firebaseconfig';
 import { useNavigate } from 'react-router-dom';
 import PersistentDrawerLeft from '../../../components/Drawer';
@@ -31,31 +31,54 @@ const AddCourse = () => {
           });
       }
     });
-    setTimeout(() => {
-      // Show SweetAlert2 alert on successful login
-      Swal.fire({
-        icon: 'success',
-        title: 'Login Successful!',
-        text: 'Welcome back!',
-        customClass: {
-          popup: 'animate__animated animate__zoomIn', // Use animate.css for animation
-        },
-        showConfirmButton: false, // Remove default "OK" button
-        timer: 3000, // Auto-close after 3 seconds
-        timerProgressBar: true, // Show progress bar
-        position: 'top-end', // Position at the top-right corner
-        width: '20rem', // Set custom width
-        padding: '0.5rem', // Adjust padding
-        backdrop: false, // Disable backdrop
-        allowOutsideClick: false, // Disable clicking outside to close
-      });
-    }, 1000);
+    // setTimeout(() => {
+    //   // Show SweetAlert2 alert on successful login
+    //   Swal.fire({
+    //     icon: 'success',
+    //     title: 'Login Successful!',
+    //     text: 'Welcome back!',
+    //     customClass: {
+    //       popup: 'animate__animated animate__zoomIn', // Use animate.css for animation
+    //     },
+    //     showConfirmButton: false, // Remove default "OK" button
+    //     timer: 3000, // Auto-close after 3 seconds
+    //     timerProgressBar: true, // Show progress bar
+    //     position: 'top-end', // Position at the top-right corner
+    //     width: '20rem', // Set custom width
+    //     padding: '0.5rem', // Adjust padding
+    //     backdrop: false, // Disable backdrop
+    //     allowOutsideClick: false, // Disable clicking outside to close
+    //   });
+    // }, 1000);
 
     return () => {
       unsubscribe();
     };
 
   }, []);
+
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      image: file,
+    }));
+  };
+
+  const handleImage = async () => {
+    try {
+      const imageUrl = await addImageToStorage(formData.image, formData.Course);
+      console.log("Image URL:", imageUrl);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        image: imageUrl,
+      }));
+      Swal.fire("Image uploaded successfully");
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -122,6 +145,23 @@ const AddCourse = () => {
                 required
                 style={{ marginBottom: '20px' }}
               />
+               
+              <input type="file" onChange={handleFileChange} />
+            
+              <Button
+                onClick={handleImage}
+                fullWidth
+                type="submit"
+                variant="contained"
+                color="primary"
+                sx={{
+                  marginBottom: '1rem',
+                  marginBottom: '15px',
+                  marginTop: '15px'
+                }}
+              >
+                Upload Image
+              </Button>
               <Button
                 type="submit"
                 variant="contained"

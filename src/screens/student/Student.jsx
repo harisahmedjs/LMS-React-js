@@ -34,7 +34,7 @@ const Student = () => {
         showConfirmButton: false, // Remove default "OK" button
         timer: 3000, // Auto-close after 3 seconds
         timerProgressBar: true, // Show progress bar
-        position: 'top-end', // Position at the top-right corner
+        position: 'top-', // Position at the top-right corner
         width: '20rem', // Set custom width
         padding: '0.5rem', // Adjust padding
         backdrop: false, // Disable backdrop

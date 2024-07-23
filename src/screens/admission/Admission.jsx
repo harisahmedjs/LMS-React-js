@@ -13,7 +13,7 @@ import {
   InputAdornment,
   IconButton
 } from '@mui/material';
-import { collection, getDocs } from 'firebase/firestore'; 
+import { collection, getDocs } from 'firebase/firestore';
 import { signUpUser, addImageToStorage } from '../../config/firebase/FirebaseMethods';
 import { db } from '../../config/firebase/firebaseconfig';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 const Admission = () => {
 
   const [showPassword, setShowPassword] = useState(false);
- 
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -36,11 +36,11 @@ const Admission = () => {
     fullName: '',
     email: '',
     password: '',
-    phone: '', 
+    phone: '',
     address: '',
     course: '',
     type: 'student',
-    days: '', 
+    days: '',
   });
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -73,7 +73,7 @@ const Admission = () => {
       image: file,
     }));
   };
-  
+
   const handleImage = async () => {
     try {
       const imageUrl = await addImageToStorage(formData.image, formData.email);
@@ -103,9 +103,9 @@ const Admission = () => {
 
   return (
     <div className="admission-container">
-      
+
       <Container maxWidth="sm" className="form-container animate__animated animate__fadeIn">
-        <Typography sx={{color : '#343a40'}} variant="h4" align="center" gutterBottom className="animate__animated animate__fadeInDown">
+        <Typography sx={{ color: '#343a40' }} variant="h4" align="center" gutterBottom className="animate__animated animate__fadeInDown">
           Admission Form
         </Typography>
         <form onSubmit={handleSubmit}>
@@ -118,7 +118,7 @@ const Admission = () => {
                 value={formData.fullName}
                 onChange={handleChange}
                 variant="outlined"
-                sx={{background: 'white'}}
+                sx={{ background: 'white' }}
               />
             </Grid>
             <Grid item xs={12} className="animate__animated animate__fadeInRight">
@@ -129,30 +129,30 @@ const Admission = () => {
                 value={formData.email}
                 onChange={handleChange}
                 variant="outlined"
-                sx={{background: 'white'}}
+                sx={{ background: 'white' }}
               />
             </Grid>
             <Grid item xs={12} className="animate__animated animate__fadeInLeft">
-      <TextField
-        fullWidth
-        label="Password"
-        name="password"
-        type={showPassword ? 'text' : 'password'}
-        value={formData.password}
-        onChange={handleChange}
-        variant="outlined"
-        sx={{ background: 'white' }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={togglePasswordVisibility} edge="end">
-                {showPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
-          )
-        }}
-      />
-    </Grid>
+              <TextField
+                fullWidth
+                label="Password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                value={formData.password}
+                onChange={handleChange}
+                variant="outlined"
+                sx={{ background: 'white' }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={togglePasswordVisibility} edge="end">
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </Grid>
             <Grid item xs={12} className="animate__animated animate__fadeInRight">
               <TextField
                 fullWidth
@@ -162,7 +162,7 @@ const Admission = () => {
                 value={formData.phone}
                 onChange={handleChange}
                 variant="outlined"
-                sx={{background: 'white'}}
+                sx={{ background: 'white' }}
               />
             </Grid>
             <Grid item xs={12} className="animate__animated animate__fadeInLeft">
@@ -175,20 +175,20 @@ const Admission = () => {
                 value={formData.address}
                 onChange={handleChange}
                 variant="outlined"
-                sx={{background: 'white'}}
+                sx={{ background: 'white' }}
               />
             </Grid>
             <Grid item xs={12} className="animate__animated animate__fadeInRight">
               <FormControl fullWidth margin="normal">
-                <InputLabel sx={{color: 'black'}}>Course</InputLabel>
+                <InputLabel sx={{ color: 'black' }}>Course</InputLabel>
                 <Select
                   label="Course"
                   name="course"
                   value={formData.course}
                   onChange={handleChange}
-                  sx={{background: 'white'}}
+                  sx={{ background: 'white' }}
                 >
-                  {courses.map((course , index) => (
+                  {courses.map((course, index) => (
                     <MenuItem key={index} value={course.Course}>
                       {course.Course}
                     </MenuItem>
@@ -198,13 +198,13 @@ const Admission = () => {
             </Grid>
             <Grid item xs={12} className="animate__animated animate__fadeInLeft">
               <FormControl fullWidth margin="normal">
-                <InputLabel sx={{color: 'black'}}>Days</InputLabel>
+                <InputLabel sx={{ color: 'black' }}>Days</InputLabel>
                 <Select
                   label="Days"
                   name="days"
                   value={formData.days}
                   onChange={handleChange}
-                  sx={{background : 'white'}}
+                  sx={{ background: 'white' }}
                 >
                   <MenuItem value="WMF">WMF</MenuItem>
                   <MenuItem value="TTS">TTS</MenuItem>
@@ -215,34 +215,34 @@ const Admission = () => {
               <input type="file" onChange={handleFileChange} />
             </Grid>
             <Grid item xs={12} className="animate__animated animate__fadeInLeft">
-            <Button
-  onClick={handleImage}
-  fullWidth
-  sx={{
-    marginBottom: '1rem',
-    color : ' #343a40',
-    backgroundColor: '#0078d4',
-  }}
->
-  Upload Image
-</Button>
+              <Button
+                onClick={handleImage}
+                fullWidth
+                sx={{
+                  marginBottom: '1rem',
+                  color: ' #343a40',
+                  backgroundColor: '#0078d4',
+                }}
+              >
+                Upload Image
+              </Button>
             </Grid>
             <Grid item xs={12} className="animate__animated animate__fadeInRight">
-            <Button
-  type="submit"
-  fullWidth
-  disabled={loading}
-  sx={{
-    backgroundColor: '#343a40',
-    color: '#ffffff',
-    '&:hover': {
-      backgroundColor: '#343a40', // Ensure it remains the same on hover
-    },
-  }}
-  startIcon={loading && <CircularProgress size={24} />}
->
-  {loading ? 'Submitting...' : 'Submit'}
-</Button>
+              <Button
+                type="submit"
+                fullWidth
+                disabled={loading}
+                sx={{
+                  backgroundColor: '#343a40',
+                  color: '#ffffff',
+                  '&:hover': {
+                    backgroundColor: '#343a40', // Ensure it remains the same on hover
+                  },
+                }}
+                startIcon={loading && <CircularProgress size={24} />}
+              >
+                {loading ? 'Submitting...' : 'Submit'}
+              </Button>
             </Grid>
           </Grid>
         </form>

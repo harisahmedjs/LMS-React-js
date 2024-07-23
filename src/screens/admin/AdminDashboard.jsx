@@ -15,7 +15,7 @@ const AdminDashboard = () => {
          <Box>
          <Routes>
              <Route path='/' element= {<AddCourse />} />
-             <Route path='/allcourse' element = {<AllCourse />} />
+             <Route path='/allcourses' element = {<AllCourse />} />
              <Route path='/allstudents' element = {<Allstudents />} />
              <Route path='/singlecourse' element = {<SingleCourse />} />
          </Routes>

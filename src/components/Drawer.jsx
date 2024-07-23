@@ -121,8 +121,8 @@ const PersistentDrawerLeft = ({ screen }) => {
       case 'Add Course':
         navigate('/admin');
         break;
-      case 'All Course':
-        navigate('/admin/allcourse');
+      case 'All Courses':
+        navigate('/admin/allcourses');
         break;
       case 'All Students':
         navigate('/admin/allstudents');
@@ -198,7 +198,7 @@ const PersistentDrawerLeft = ({ screen }) => {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Add Course', 'All Course', 'All Students'].map((text, index) => (
+          {['Add Course', 'All Courses', 'All Students'].map((text, index) => (
             <ListItem
               key={text}
               disablePadding
