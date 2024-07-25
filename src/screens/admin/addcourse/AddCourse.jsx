@@ -98,7 +98,9 @@ const AddCourse = () => {
           Course: '',
           Instructor: '',
           Timing: '',
+          imageurl: ''
         });
+        Swal.fire("Course added successfully");
       })
       .catch((error) => {
         console.error('Error adding course:', error);

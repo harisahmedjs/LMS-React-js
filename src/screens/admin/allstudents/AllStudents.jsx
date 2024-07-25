@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, where, query } from "firebase/firestore";
 import { db } from '../../../config/firebase/firebaseconfig';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
-
+import { RiDeleteBin4Line } from '@remixicon/react';
+import { deleteDocument } from '../../../config/firebase/FirebaseMethods';
 
 const style = {
   position: 'absolute',
@@ -16,11 +16,9 @@ const style = {
   width: 400,
   bgcolor: 'background.paper',
   border: '2px solid #000',
-  borderRadius: 6, // Adjust the border radius value as needed
-  boxShadow: 24,
+  borderRadius: 6,
   p: 4,
 };
-
 
 const AllStudents = () => {
   const [students, setStudents] = useState([]);
@@ -31,11 +29,14 @@ const AllStudents = () => {
   }, []);
 
   const gettingStudents = async () => {
-    const q = query(collection(db, "student"), where('type', '==', 'student'));
-    const querySnapshot = await getDocs(q);
-    const studentsArray = querySnapshot.docs.map(doc => doc.data());
-    setStudents(studentsArray);
-    console.log(students);
+    try {
+      const q = query(collection(db, "student"), where('type', '==', 'student'));
+      const querySnapshot = await getDocs(q);
+      const studentsArray = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setStudents(studentsArray);
+    } catch (error) {
+      console.error("Error fetching students:", error);
+    }
   };
 
   const handleOpenModal = (index) => {
@@ -50,6 +51,15 @@ const AllStudents = () => {
     handleCloseModal();
   };
 
+  const deleteCourse = async (index) => {
+    try {
+      await deleteDocument(students[index].id, "student"); // Assuming "students" is the collection name
+      gettingStudents(); // Refresh students after deletion
+    } catch (error) {
+      console.error("Error deleting student:", error);
+    }
+  };
+
   return (
     <div className="container mt-5">
       <h1 className="mb-4">All Students</h1>
@@ -60,12 +70,13 @@ const AllStudents = () => {
           <div className="row">
             {students.map((student, index) => (
               <div key={index} className="col-md-4 mb-4">
-                <div className="card h-100" onClick={() => handleOpenModal(index)}>
+                <div className="card h-100">
                   <div className="card-body">
-                    <img src={student.imageUrl} alt="Student" />
+                    <img src={student.imageUrl} alt="Student" onClick={() => handleOpenModal(index)} />
                     <div>
                       <h5 className="card-title">{student.fullName}</h5>
                       <p className="card-text">Course: {student.course}</p>
+                      <button className='btn' onClick={() => deleteCourse(index)}><RiDeleteBin4Line/></button>
                     </div>
                   </div>
                 </div>
@@ -81,23 +92,23 @@ const AllStudents = () => {
                   aria-describedby="modal-modal-description"
                 >
                   <Box sx={style}>
-                    <Typography id="modal-modal-description" >
-                      Full-Name :{student.fullName}
+                    <Typography id="modal-modal-description">
+                      Full Name: {student.fullName}
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                      Email : {student.email}
+                      Email: {student.email}
                     </Typography> 
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                      Course Name : {student.course}
+                      Course Name: {student.course}
                     </Typography>
-                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                      Days  : {student.days}
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                      Days: {student.days}
                     </Typography> 
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                      Phone Number : {student.phone}
+                      Phone Number: {student.phone}
                     </Typography> 
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                      Address : {student.address}
+                      Address: {student.address}
                     </Typography>
                   </Box>
                 </Modal>

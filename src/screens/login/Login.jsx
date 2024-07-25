@@ -17,6 +17,7 @@ import { loginUser } from '../../config/firebase/FirebaseMethods.js';
 import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import Swal from 'sweetalert2';
 
 function Copyright(props) {
   return (
@@ -67,6 +68,13 @@ function Login() {
       })
       .catch((error) => {
         console.error("Login error: ", error);
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: error,
+          showConfirmButton: false,
+          timer: 1500
+        });
       })
       .finally(() => {
         setLoading(false);

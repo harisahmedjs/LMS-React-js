@@ -70,7 +70,7 @@ const AllCourses = () => {
       ) : (
         <div className="row">
           {courses.map((course, index) => (
-            <div key={index} className="col-md-4 mb-4 animate__animated animate__zoomIn">
+            <div key={index} className="col-md-4 animate__animated animate__zoomIn">
               <div className="card shadow-sm">
                 <div className="card-body d-flex flex-column">
                   {editingIndex === index ? (
@@ -99,14 +99,14 @@ const AllCourses = () => {
                     </>
                   ) : (
                     <>
-                      <div className='d-flex justify-content-between align-items-center'>
+                      <div className='d-flex justify-content-between  align-items-center'>
                         <img src={course.image} alt="Course" />
                         <h5 className="card-title">{course.Course}</h5>
+                        <button className='btn' onClick={() => handleEditClick(index)}><RiEdit2Line/></button>
+                      <button className='btn' onClick={() => deleteCourse(index)}><RiDeleteBin4Line/></button>
                       </div>
                       <p className="card-text">Instructor: {course.Instructor}</p>
                       <p className="card-text">Timing: {course.Timing}</p>
-                      <button onClick={() => handleEditClick(index)}><RiEdit2Line/></button>
-                      <button onClick={() => deleteCourse(index)}><RiDeleteBin4Line/></button>
                     </>
                   )}
                 </div>
