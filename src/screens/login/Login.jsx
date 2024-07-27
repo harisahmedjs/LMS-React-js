@@ -141,7 +141,7 @@ function Login() {
               disabled={loading}
               startIcon={loading ? <CircularProgress size={24} /> : null}
             >
-              {loading ? 'Signing In...' : 'Sign In'}
+              {loading ? '': 'Sign In'}
             </Button>
             <Grid container>
               <Grid item xs>

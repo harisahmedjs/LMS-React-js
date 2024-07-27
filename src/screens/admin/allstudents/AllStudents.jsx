@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 import { RiDeleteBin4Line } from '@remixicon/react';
 import { deleteDocument } from '../../../config/firebase/FirebaseMethods';
+import 'animate.css';
 
 const style = {
   position: 'absolute',
@@ -62,7 +63,7 @@ const AllStudents = () => {
 
   return (
     <div className="container mt-5">
-      <h1 className="mb-4">All Students</h1>
+      <h1 className="mb-4 mb-4 animate__animated animate__fadeInDown">All Students</h1>
       {
         students.length === 0 ? (
           <h2 style={{ textAlign: "center" }}>No students found...</h2>

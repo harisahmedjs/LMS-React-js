@@ -234,14 +234,10 @@ const Admission = () => {
                 disabled={loading}
                 sx={{
                   backgroundColor: '#343a40',
-                  color: '#ffffff',
-                  '&:hover': {
-                    backgroundColor: '#343a40', // Ensure it remains the same on hover
-                  },
-                }}
+                  color: '#ffffff', }}
                 startIcon={loading && <CircularProgress size={24} />}
               >
-                {loading ? 'Submitting...' : 'Submit'}
+                {loading ? '' : 'Register'}
               </Button>
             </Grid>
           </Grid>

@@ -22,25 +22,7 @@ const Student = () => {
         });
       }
     });
-    setTimeout(() => {
-      // Show SweetAlert2 alert on successful login
-      Swal.fire({
-        icon: 'success',
-        title: 'Login Successful!',
-        text: 'Welcome back!',
-        customClass: {
-          popup: 'animate__animated animate__zoomIn', // Use animate.css for animation
-        },
-        showConfirmButton: false, // Remove default "OK" button
-        timer: 3000, // Auto-close after 3 seconds
-        timerProgressBar: true, // Show progress bar
-        position: 'top-', // Position at the top-right corner
-        width: '20rem', // Set custom width
-        padding: '0.5rem', // Adjust padding
-        backdrop: false, // Disable backdrop
-        allowOutsideClick: false, // Disable clicking outside to close
-      });
-    }, 1000);
+  
   }, []);
 
   console.log(arr);

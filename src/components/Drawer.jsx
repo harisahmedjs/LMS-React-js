@@ -198,7 +198,7 @@ const PersistentDrawerLeft = ({ screen }) => {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Add Course', 'All Courses', 'All Students'].map((text, index) => (
+          {['Add Course', 'All Courses', 'All Students' , ].map((text, index) => (
             <ListItem
               key={text}
               disablePadding

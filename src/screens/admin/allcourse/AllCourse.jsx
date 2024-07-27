@@ -3,8 +3,7 @@ import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { db } from '../../../config/firebase/firebaseconfig';
 import 'animate.css';
 import { deleteDocument } from '../../../config/firebase/FirebaseMethods';
-import PersistentDrawerLeft from '../../../components/Drawer';
-import { RiDeleteBack2Line, RiDeleteBackLine, RiDeleteBin2Fill, RiDeleteBin4Line, RiEdit2Line, RiEditBoxFill, RiEditLine } from '@remixicon/react';
+import { RiDeleteBin4Line, RiEdit2Line} from '@remixicon/react';
 
 const AllCourses = () => {
   const [courses, setCourses] = useState([]);
