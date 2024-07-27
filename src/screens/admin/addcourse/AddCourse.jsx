@@ -95,6 +95,13 @@ const AddCourse = () => {
       })
       .catch((error) => {
         console.error('Error adding course:', error);
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: error,
+          showConfirmButton: false,
+          timer: 1500
+        });
       })
       .finally(() => {
         setLoading(false);

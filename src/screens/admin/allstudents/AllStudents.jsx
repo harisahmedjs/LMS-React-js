@@ -58,6 +58,13 @@ const AllStudents = () => {
       gettingStudents(); // Refresh students after deletion
     } catch (error) {
       console.error("Error deleting student:", error);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: error,
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   };
 

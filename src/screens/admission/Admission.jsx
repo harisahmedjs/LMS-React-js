@@ -96,6 +96,13 @@ const Admission = () => {
       navigate('/');
     } catch (error) {
       console.error("Error signing up user:", error);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: error,
+        showConfirmButton: false,
+        timer: 1500
+      });
     } finally {
       setLoading(false);
     }
@@ -218,11 +225,10 @@ const Admission = () => {
               <Button
                 onClick={handleImage}
                 fullWidth
-                sx={{
-                  marginBottom: '1rem',
-                  color: ' #343a40',
-                  backgroundColor: '#0078d4',
-                }}
+                type="button" // Change to type="button" to prevent form submission
+                variant="contained"
+                color="primary"
+                sx={{ marginBottom: '1rem', marginTop: '15px' }}
               >
                 Upload Image
               </Button>
@@ -230,11 +236,11 @@ const Admission = () => {
             <Grid item xs={12} className="animate__animated animate__fadeInRight">
               <Button
                 type="submit"
+                variant="contained"
+                color="primary"
                 fullWidth
                 disabled={loading}
-                sx={{
-                  backgroundColor: '#343a40',
-                  color: '#ffffff', }}
+              
                 startIcon={loading && <CircularProgress size={24} />}
               >
                 {loading ? '' : 'Register'}
