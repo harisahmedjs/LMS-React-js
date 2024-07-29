@@ -41,14 +41,22 @@ const navigate = useNavigate()
             aria-label="menu"
             sx={{ marginRight: 2 }}
           >
-            <MenuIcon />
+           
           </IconButton>
 
           {/* Title */}
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
-            Welcome To LMS
-          </Typography>
-
+          <Typography
+  variant="h6"
+  component="div"
+  sx={{ 
+    flexGrow: 1, 
+    textAlign: 'center', 
+    textDecoration: 'underline' 
+  }}
+  fontSize={'40px'}
+>
+  Welcome To LMS
+</Typography>
           {/* Logout Image (on the right) */}
           {data && data.length > 0 && (
             <img 

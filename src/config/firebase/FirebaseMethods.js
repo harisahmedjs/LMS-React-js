@@ -3,7 +3,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
 } from "firebase/auth";
 import app from "./firebaseconfig.js";
 import {
@@ -16,9 +15,9 @@ import {
   deleteDoc,
   doc,
   updateDoc,
+  getDoc,
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { lazy } from "react";
 
 
   const storage = getStorage(app);
@@ -56,6 +55,22 @@ import { lazy } from "react";
   };
   
   
+  export async function getUser(id) {
+    try {
+      const docRef = doc(db, "student", id);  // Reference to the document
+      const docSnap = await getDoc(docRef);    // Fetch the document snapshot
+  
+      if (docSnap.exists()) {
+        return docSnap.data();  // Return the document data
+      } else {
+        console.log("No such document!");
+        return null;  // Handle the case where the document does not exist
+      }
+    } catch (error) {
+      console.error("Error getting document:", error);
+      return null;  // Handle errors and return null or handle it as needed
+    }
+  }
   
 
   // login user
