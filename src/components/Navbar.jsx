@@ -24,7 +24,7 @@ const navigate = useNavigate()
   };
 
   const handleLogout = () => {
-   signOutUser().then((res)=> navigate('/'))
+   signOutUser()
     handleCloseModal();
   };
 
@@ -53,7 +53,8 @@ const navigate = useNavigate()
     textAlign: 'center', 
     textDecoration: 'underline' 
   }}
-  fontSize={'40px'}
+
+ fontSize={{ xs: '1.5rem', sm: '2rem', md: '2.5rem', lg: '3rem' }} 
 >
   Welcome To LMS
 </Typography>

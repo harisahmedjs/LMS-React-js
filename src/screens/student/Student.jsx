@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getData } from '../../config/firebase/FirebaseMethods';
-import { auth } from '../../config/firebase/firebaseconfig';
 import MenuAppBar from '../../components/Navbar';
 import { Container, Grid, Card, CardMedia, CardContent, Typography } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,6 +8,7 @@ import 'animate.css';
 import Swal from 'sweetalert2';
 
 const Student = () => {
+  const auth = getAuth();
   const [arr, setArr] = useState([]);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const Student = () => {
         <Grid container spacing={4}>
           {arr && arr.length > 0 ? (
             arr.map((item, index) => (
-              <Grid item key={index} xs={12} sm={6} md={4}>
+              <Grid item key={index} xs={8} sm={6} md={4}>
                 <Card
                   sx={{
                     height: '100%',
@@ -47,8 +47,8 @@ const Student = () => {
                   <CardMedia
                     component="img"
                     sx={{
-                      height: 150,
-                      width: 150,
+                      height: 120,
+                      width: 120,
                       borderRadius: '50%',
                       objectFit: 'cover',
                       margin: '16px auto 0',

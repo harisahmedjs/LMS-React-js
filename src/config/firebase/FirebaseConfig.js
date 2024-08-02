@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
-const firebaseconfig = {
+const FirebaseConfig = {
     apiKey: 'AIzaSyDtjmVaRNnxwg5d925iX1Z8rLZuEBU6gjQ',
     authDomain: 'learning-institute-management.firebaseapp.com',
     projectId: "learning-institute-management",
@@ -13,7 +13,7 @@ const firebaseconfig = {
     measurementId: 'G-P1G7WN5LFZ'
   };
 
-const app = initializeApp(firebaseconfig);
+const app = initializeApp(FirebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);

@@ -4,7 +4,6 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import app from "./firebaseconfig.js";
 import {
   getFirestore,
   collection,
@@ -17,6 +16,7 @@ import {
   updateDoc,
   getDoc,
 } from "firebase/firestore";
+import app from './FirebaseConfig'
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 

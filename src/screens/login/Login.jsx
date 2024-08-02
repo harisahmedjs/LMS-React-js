@@ -68,7 +68,7 @@ function Login() {
         if (res.type === 'student') {
           navigate('/student');
         } else {
-          navigate('/admin');
+          navigate('admin');
         }
       })
       .catch((error) => {
@@ -150,7 +150,7 @@ function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/Admission" variant="body2">
+                <Link href="/admission" variant="body2">
                   Don't have an account?
                 </Link>
               </Grid>

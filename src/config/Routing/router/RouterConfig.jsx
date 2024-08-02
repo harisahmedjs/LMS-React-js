@@ -23,7 +23,7 @@ const RouterConfig = () => {
           />
           <Route path="/admission" element={<Admission />} />
           <Route
-            path="admin/*"
+            path="/admin/*"
             element={
               <ProtectedRoutes>
                 <AdminDashboard />

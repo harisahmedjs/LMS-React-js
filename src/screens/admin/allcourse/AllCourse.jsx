@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
-import { db } from '../../../config/firebase/firebaseconfig';
 import 'animate.css';
 import { deleteDocument } from '../../../config/firebase/FirebaseMethods';
 import { RiDeleteBin4Line, RiEdit2Line} from '@remixicon/react';
+import { db } from '../../../config/firebase/FirebaseConfig';
 
 const AllCourses = () => {
   const [courses, setCourses] = useState([]);

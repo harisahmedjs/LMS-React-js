@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, where, query } from "firebase/firestore";
-import { db } from '../../../config/firebase/firebaseconfig';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -8,6 +7,7 @@ import Backdrop from '@mui/material/Backdrop';
 import { RiDeleteBin4Line } from '@remixicon/react';
 import { deleteDocument } from '../../../config/firebase/FirebaseMethods';
 import 'animate.css';
+import { db } from '../../../config/firebase/FirebaseConfig';
 
 const style = {
   position: 'absolute',
@@ -82,7 +82,7 @@ const AllStudents = () => {
                   <div className="card-body">
                     <img src={student.imageUrl} alt="Student" onClick={() => handleOpenModal(index)} />
                     <div>
-                      <h5 className="card-title">{student.fullName}</h5>
+                      <h5 className="card-title">{student.fullName}</h5>  
                       <p className="card-text">Course: {student.course}</p>
                       <button className='btn' onClick={() => deleteCourse(index)}><RiDeleteBin4Line/></button>
                     </div>

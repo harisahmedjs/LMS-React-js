@@ -1,6 +1,6 @@
 import React from 'react'
 import PersistentDrawerLeft from '../../components/Drawer'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import AllCourse from './allcourse/AllCourse'
 import AddCourse from './addcourse/AddCourse'
 import Allstudents from './allstudents/AllStudents'

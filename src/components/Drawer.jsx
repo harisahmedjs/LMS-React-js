@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { getData, signOutUser } from '../config/firebase/FirebaseMethods';
-import { auth } from '../config/firebase/firebaseconfig';
+import { auth } from '../config/firebase/FirebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import LogoutModal from './Modal';
 import { styled, useTheme } from '@mui/material/styles';
@@ -29,7 +29,7 @@ const drawerWidth = 240;
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(1),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,

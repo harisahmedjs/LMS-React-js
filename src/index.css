@@ -31,7 +31,6 @@ body{
   }
   .card-body {
     display: flex;
-    align-items: center;
   }
   
   .card img {
@@ -84,4 +83,60 @@ body{
   .card-title{
     margin-right: 20px;
   }
-  
+  /* AllStudents.css */
+
+.card-img {
+  cursor: pointer;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 2px solid #ddd;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 1rem;
+}
+
+.modal-body p {
+  margin-bottom: 0.5rem;
+}
+/* Custom font sizes for responsive design */
+.appbar-title {
+  font-size: 2.5rem; /* Default font size for large screens */
+  text-align: center;
+}
+
+/* Font size adjustments for smaller screens */
+@media (max-width: 576px) {
+  .appbar-title {
+    font-size: 1.5rem; /* Smaller font size for extra-small screens */
+  }
+}
+
+/* Font size adjustments for medium screens */
+@media (max-width: 768px) {
+  .appbar-title {
+    font-size: 2rem; /* Medium font size for small screens */
+  }
+}
+
+/* Font size adjustments for large screens */
+@media (min-width: 992px) {
+  .appbar-title {
+    font-size: 2.5rem; /* Font size for medium-large screens */
+  }
+}
+
+/* Logout image styling */
+.user-image {
+  height: 40px;
+  margin-left: 16px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+/* fontSize={{ xs: '1.5rem', sm: '2rem', md: '2.5rem', lg: '3rem' }} */

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getData, sendData, addImageToStorage } from '../../../config/firebase/FirebaseMethods';
-import { auth } from '../../../config/firebase/firebaseconfig';
 import { useNavigate } from 'react-router-dom';
 import PersistentDrawerLeft from '../../../components/Drawer';
 import { TextField, Button, Typography, Grid, Paper, CircularProgress } from '@mui/material';
 import Swal from 'sweetalert2';
 
 const AddCourse = () => {
+  const auth = getAuth();
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const [formData, setFormData] = useState({
@@ -35,7 +35,7 @@ const AddCourse = () => {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [auth]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -111,13 +111,13 @@ const AddCourse = () => {
   return (
     <div>
       <PersistentDrawerLeft screen={<div />} />
-      <Grid container justifyContent="center" mt={4} width="80%" margin="auto">
-        <Grid item xs={10} sm={8} md={6}>
-          <Paper elevation={3} sx={{ padding: 3 }}>
+      <Grid container justifyContent="center" spacing={2} sx={{ mt: 4, px: { xs: 2, sm: 4 } }}>
+        <Grid item xs={12} sm={10} md={8} lg={4 }>
+          <Paper elevation={3} sx={{ padding: { xs: 2, sm: 3 }, width: '100%' }}>
             <Typography variant="h5" gutterBottom sx={{ textAlign: 'center' }}>
               Add a Course
             </Typography>
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', width: '70%', margin: 'auto' }}>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%' }}>
               <TextField
                 label="Course Name"
                 variant="outlined"
@@ -125,7 +125,7 @@ const AddCourse = () => {
                 value={formData.Course}
                 onChange={handleChange}
                 required
-                style={{ marginBottom: '20px' }}
+                fullWidth
               />
               <TextField
                 label="Instructor Name"
@@ -134,7 +134,7 @@ const AddCourse = () => {
                 value={formData.Instructor}
                 onChange={handleChange}
                 required
-                style={{ marginBottom: '20px' }}
+                fullWidth
               />
               <TextField
                 label="Course Timing"
@@ -143,18 +143,22 @@ const AddCourse = () => {
                 value={formData.Timing}
                 onChange={handleChange}
                 required
-                style={{ marginBottom: '20px' }}
+                fullWidth
               />
               
-              <input type="file" onChange={handleFileChange} />
+              <input
+                type="file"
+                onChange={handleFileChange}
+                style={{ marginBottom: '20px', width: '100%' }}
+              />
               
               <Button
                 onClick={handleImageUpload}
-                fullWidth
-                type="button" // Change to type="button" to prevent form submission
+                type="button" // Prevent form submission
                 variant="contained"
                 color="primary"
-                sx={{ marginBottom: '1rem', marginTop: '15px' }}
+                fullWidth
+                sx={{ mb: 2 }}
               >
                 Upload Image
               </Button>

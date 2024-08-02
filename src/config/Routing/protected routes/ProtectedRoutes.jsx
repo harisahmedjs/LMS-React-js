@@ -1,15 +1,18 @@
-import React, { useContext } from "react";
-import { Navigate } from "react-router-dom";
-import { Usercontext } from "../../../context/UserContextProvider";  // Adjust path as necessary
+import React, { useContext } from 'react';
+import { Navigate } from 'react-router-dom';
+import { Usercontext } from '../../../context/UserContextProvider'; // Adjust the path as needed
 
 const ProtectedRoutes = ({ children }) => {
-  const { user } = useContext(Usercontext);
+  const { user, initializing } = useContext(Usercontext);
 
-  if (user) {
-    return user
-    
-  } else{
-    <Navigate to="/" />;
+  // Handle the initializing state
+  if (initializing) {
+    return <div className="d-flex align-items-center justify-content-center vh-100">Loading...</div>;
+  }
+
+  // Redirect if the user is not authenticated
+  if (!user) {
+    return <Navigate to="/" />;
   }
 
   return children;

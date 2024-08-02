@@ -15,11 +15,11 @@ import {
 } from '@mui/material';
 import { collection, getDocs } from 'firebase/firestore';
 import { signUpUser, addImageToStorage } from '../../config/firebase/FirebaseMethods';
-import { db } from '../../config/firebase/firebaseconfig';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import 'animate.css';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { db } from '../../config/firebase/FirebaseConfig';
 
 
 const Admission = () => {
@@ -228,7 +228,7 @@ const Admission = () => {
                 type="button" // Change to type="button" to prevent form submission
                 variant="contained"
                 color="primary"
-                sx={{ marginBottom: '1rem', marginTop: '15px' }}
+                sx={{ marginTop: '15px' }}
               >
                 Upload Image
               </Button>
