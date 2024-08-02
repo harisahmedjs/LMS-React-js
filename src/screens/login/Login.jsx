@@ -150,7 +150,7 @@ function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/admission" variant="body2">
+                <Link href="/admission" variant="body2" style={{textDecoration : 'none', fontSize :'15px'}}>
                   Don't have an account?
                 </Link>
               </Grid>

@@ -114,7 +114,7 @@ const AddCourse = () => {
       <Grid container justifyContent="center" spacing={2} sx={{ mt: 4, px: { xs: 2, sm: 4 } }}>
         <Grid item xs={12} sm={10} md={8} lg={4 }>
           <Paper elevation={3} sx={{ padding: { xs: 2, sm: 3 }, width: '100%' }}>
-            <Typography variant="h5" gutterBottom sx={{ textAlign: 'center' }}>
+            <Typography variant="h5" gutterBottom sx={{ textAlign: 'center'  }}>
               Add a Course
             </Typography>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%' }}>
@@ -149,7 +149,7 @@ const AddCourse = () => {
               <input
                 type="file"
                 onChange={handleFileChange}
-                style={{ marginBottom: '20px', width: '100%' }}
+                style={{ marginBottom: '10px', width: '100%' }}
               />
               
               <Button
@@ -158,7 +158,7 @@ const AddCourse = () => {
                 variant="contained"
                 color="primary"
                 fullWidth
-                sx={{ mb: 2 }}
+               
               >
                 Upload Image
               </Button>

@@ -1,3 +1,7 @@
+*{
+  font-family: "Poppins", sans-serif;
+}
+
 body{
   background-color: #f8f9fa;
   color: #343a40 ;
@@ -41,7 +45,7 @@ body{
   }
   
   .card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
   }
   .square-image-container {
     width: 150px;
@@ -59,6 +63,7 @@ body{
   .admission-container {
     display: flex;
     height: 110vh;
+    margin-top: 50px;
   }
   
   .image-container {
@@ -98,6 +103,9 @@ body{
 }
 
 .card-text {
+  font-size: 1rem;
+  margin-top: 10px;
+}.card-text1 {
   font-size: 1rem;
 }
 

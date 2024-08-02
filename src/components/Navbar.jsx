@@ -34,7 +34,7 @@ const navigate = useNavigate()
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
           {/* Menu Icon (on the left) */}
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -42,7 +42,7 @@ const navigate = useNavigate()
             sx={{ marginRight: 2 }}
           >
            
-          </IconButton>
+          </IconButton> */}
 
           {/* Title */}
           <Typography
@@ -63,7 +63,7 @@ const navigate = useNavigate()
             <img 
               src={data[0].image}  // Assuming image source is in the data prop
               alt="User"
-              style={{ height: 40, marginLeft: 2, cursor: 'pointer', borderRadius: '50%' }}
+              style={{ marginLeft: 2, cursor: 'pointer', borderRadius: '50%' , width : 40, height : 40,  objectFit : 'cover'}}
               onClick={handleOpenModal} 
             />
           )}

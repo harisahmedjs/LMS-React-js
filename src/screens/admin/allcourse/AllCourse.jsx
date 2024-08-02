@@ -104,8 +104,8 @@ const AllCourses = () => {
                         <button className='btn' onClick={() => handleEditClick(index)}><RiEdit2Line/></button>
                       <button className='btn' onClick={() => deleteCourse(index)}><RiDeleteBin4Line/></button>
                       </div>
-                      <p className="card-text">Instructor: {course.Instructor}</p>
-                      <p className="card-text">Timing: {course.Timing}</p>
+                      <h5 className="card-text"> <span className=''>Instructor:</span> {course.Instructor}</h5>
+                      <h5  className="card-text1">Timing: {course.Timing}</h5>
                     </>
                   )}
                 </div>

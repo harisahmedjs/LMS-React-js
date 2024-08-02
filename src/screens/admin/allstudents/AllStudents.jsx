@@ -78,13 +78,15 @@ const AllStudents = () => {
           <div className="row">
             {students.map((student, index) => (
               <div key={index} className="col-md-4 mb-4">
-                <div className="card h-100">
-                  <div className="card-body">
+                <div className="card">
+                  <div className="card-body ">
                     <img src={student.imageUrl} alt="Student" onClick={() => handleOpenModal(index)} />
                     <div>
+                      <div className='d-flex align-items-center'>
                       <h5 className="card-title">{student.fullName}</h5>  
-                      <p className="card-text">Course: {student.course}</p>
                       <button className='btn' onClick={() => deleteCourse(index)}><RiDeleteBin4Line/></button>
+                      </div>
+                      <p className="card-text">Course: {student.course}</p>
                     </div>
                   </div>
                 </div>

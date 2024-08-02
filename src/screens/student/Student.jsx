@@ -57,11 +57,11 @@ const Student = () => {
                     alt={item.fullName}
                   />
                   <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography gutterBottom variant="h5" component="div" sx={{fontWeight: 700}}>
                       {item.fullName}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {item.course}
+                    <Typography variant="body2" color="text.secondary" sx={{fontWeight : 600}}>
+                      Course:- {item.course}
                     </Typography>
                   </CardContent>
                 </Card>

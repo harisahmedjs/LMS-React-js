@@ -147,7 +147,7 @@ const PersistentDrawerLeft = ({ screen }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-          Admin Pannel
+          Admin Dashboard
           </Typography>
           {/* Display user image in a circular container in the app bar */}
           {userData && (

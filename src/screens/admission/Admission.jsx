@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { collection, getDocs } from 'firebase/firestore';
 import { signUpUser, addImageToStorage } from '../../config/firebase/FirebaseMethods';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import 'animate.css';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -221,6 +221,9 @@ const Admission = () => {
             <Grid item xs={12} className="animate__animated animate__fadeInRight">
               <input type="file" onChange={handleFileChange} />
             </Grid>
+            <Grid item xs={12} className="animate__animated animate__fadeInRight">
+              <Link to = "/" style={{textDecoration : 'none'}}>Already have an Account?</Link>
+            </Grid>
             <Grid item xs={12} className="animate__animated animate__fadeInLeft">
               <Button
                 onClick={handleImage}
@@ -228,7 +231,7 @@ const Admission = () => {
                 type="button" // Change to type="button" to prevent form submission
                 variant="contained"
                 color="primary"
-                sx={{ marginTop: '15px' }}
+                sx={{ marginTop: '10px' }}
               >
                 Upload Image
               </Button>
